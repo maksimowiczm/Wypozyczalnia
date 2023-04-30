@@ -1,11 +1,16 @@
 package pb.javab.models;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
-public class User {
+@Entity
+@Table(name = "user")
+public class User extends BaseModel {
     private String email;
     private String password;
     private Role role;
 
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CarRental> carRentals;
 }
