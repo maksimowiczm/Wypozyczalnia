@@ -1,20 +1,16 @@
 package pb.javab.controllers;
 
-import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pb.javab.daos.ICarDao;
+import pb.javab.models.Car;
 
 import java.io.IOException;
 
-@WebServlet(name = "CarController", urlPatterns = {"/car/list", "/car/edit/*", "/car/create", "/car/delete/*"})
-public class CarController extends HttpServlet {
-    @EJB
-    private ICarDao dao;
-
+@WebServlet(name = "CarController", urlPatterns = {"/car/list", "/car/edit/*", "/car/create", "/car/delete/*", "/car/details/*"})
+public class CarController extends GenericController<Car, ICarDao> {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         var path = req.getServletPath();
@@ -43,6 +39,7 @@ public class CarController extends HttpServlet {
     }
 
     private void handleList(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        dao.save(new Car());
         var cars = dao.getAll();
         req.setAttribute("carList", cars);
         req.getRequestDispatcher("/WEB-INF/views/car/list.xhtml").forward(req, res);
