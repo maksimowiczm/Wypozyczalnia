@@ -12,7 +12,7 @@ public class Car extends BaseModel {
     private String manufacturer;
     private int power;
     private CarStatus status;
-    private Transimition transimition;
+    private Transmission transmission;
     private BigDecimal rate;
 
     @OneToMany(mappedBy = "car", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -22,12 +22,12 @@ public class Car extends BaseModel {
 
     }
 
-    public Car(String model, String manufacturer, int power, CarStatus status, Transimition transimition, BigDecimal rate) {
+    public Car(String model, String manufacturer, int power, CarStatus status, Transmission transmission, BigDecimal rate) {
         this.model = model;
         this.manufacturer = manufacturer;
         this.power = power;
         this.status = status;
-        this.transimition = transimition;
+        this.transmission = transmission;
         this.rate = rate;
     }
 
@@ -64,12 +64,12 @@ public class Car extends BaseModel {
         this.status = status;
     }
 
-    public Transimition getTransimition() {
-        return transimition;
+    public Transmission getTransimition() {
+        return transmission;
     }
 
-    public void setTransimition(Transimition transimition) {
-        this.transimition = transimition;
+    public void setTransimition(Transmission transmission) {
+        this.transmission = transmission;
     }
 
     public BigDecimal getRate() {

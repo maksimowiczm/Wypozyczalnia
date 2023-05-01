@@ -4,9 +4,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
-    <form method="post" action="${formAction}">
+    <form method="post">
+        <div>
+            <label for="model">model</label>
+            <input id="model" type="text" name="model" value="${fn:escapeXml(model)}"/>
+        </div>
+        <div>
+            <label for="manufacturer">manufacturer</label>
+            <input id="manufacturer" type="text" name="manufacturer" value="${fn:escapeXml(manufacturer)}"/>
+        </div>
+        <div>
+            <label for="power">power</label>
+            <input id="power" type="number" name="power" value="${fn:escapeXml(power)}"/>
+        </div>
+        <div>
+            <label for="transmission">transmission</label>
+            <select id="transmission" name="transmission">
+                <c:forEach items="${carTransmission}" var="transmission">
+                    <option value="${transmission}">${transmission}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div>
+            <label for="rate">rate</label>
+            <input id="rate" type="number" name="rate" value="${fn:escapeXml(rate)}"/>
+        </div>
+        <div>
+            <input type="submit"/>
+        </div>
     </form>
 </f:view>
 </html>

@@ -8,23 +8,29 @@
 <h:head>
     <title>Samochody</title>
 </h:head>
-<f:view>
-    <c:forEach items="${carList}" var="car">
-        <div>
-            ${car.id}
-        </div>
-        <div>
-            ${car.manufacturer}
-        </div>
-        <div>
-            ${car.model}
-        </div>
-        <div>
-            ${car.status}
-        </div>
-        <div>
-            ${car.rate}
-        </div>
-    </c:forEach>
-</f:view>
+
+<h:body>
+    <a href="create">create</a>
+    <f:view>
+        <c:forEach items="${carList}" var="car">
+            <div>
+                ${car.id}
+            </div>
+            <div>
+                ${car.manufacturer}
+            </div>
+            <div>
+                ${car.model}
+            </div>
+            <div>
+                ${car.status}
+            </div>
+            <div>
+                ${car.rate}
+            </div>
+            <a href="edit/${car.id}">edit</a>
+            <a href="delete/${car.id}">delete</a>
+        </c:forEach>
+    </f:view>
+</h:body>
 </html>

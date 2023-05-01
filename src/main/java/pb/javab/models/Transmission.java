@@ -1,6 +1,6 @@
 package pb.javab.models;
 
-public enum Transimition {
+public enum Transmission {
     MANUAL,
     AUTOMATIC,
 }
