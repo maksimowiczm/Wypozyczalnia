@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: walidacja na zewnątrz
 @WebServlet(name = "CarController", urlPatterns = {"/car/list", "/car/edit/*", "/car/create", "/car/delete/*", "/car/details/*"})
 public class CarController extends GenericController<Car, ICarDao> {
     @Override
@@ -67,17 +68,6 @@ public class CarController extends GenericController<Car, ICarDao> {
         return Long.parseLong(path.substring(1));
     }
 
-    private void handleCreate(Car car) {
-        dao.save(car);
-    }
-
-    private void handleEdit(Long id, Car car) {
-        var oldCar = dao.get(id).orElseThrow();
-        car.setId(id);
-        car.setCarRentals(oldCar.getCarRentals());
-        dao.update(car);
-    }
-
     private Car parseCar(HttpServletRequest req, Map<String, String> errors) {
         var params = req.getParameterMap();
 
@@ -115,6 +105,40 @@ public class CarController extends GenericController<Car, ICarDao> {
         return new Car(model, manufacturer, power, CarStatus.AVAILABLE, transmission, rate);
     }
 
+    private void handleCreate(Car car) {
+        dao.save(car);
+    }
+
+    private void handleEdit(Long id, Car car) {
+        var oldCar = dao.get(id).orElseThrow();
+        car.setId(id);
+        car.setCarRentals(oldCar.getCarRentals());
+        dao.update(car);
+    }
+
+    private void handleDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        var id = parseId(req);
+
+        var car = dao.get(id).orElseThrow();
+        dao.delete(car);
+
+        res.sendRedirect(req.getContextPath() + "/car/list");
+    }
+
+    private void handleDetails(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        var id = parseId(req);
+
+        var car = dao.get(id).orElseThrow();
+        req.setAttribute("car", car);
+        req.getRequestDispatcher("/WEB-INF/views/car/details.xhtml").forward(req, res);
+    }
+
+    private void handleList(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        var cars = dao.getAll();
+        req.setAttribute("carList", cars);
+        req.getRequestDispatcher("/WEB-INF/views/car/list.xhtml").forward(req, res);
+    }
+    
     private void handleGetForm(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         var idStr = req.getPathInfo();
         if (idStr != null) {
@@ -142,28 +166,5 @@ public class CarController extends GenericController<Car, ICarDao> {
         req.setAttribute("carStatuses", CarStatus.class.getEnumConstants());
         req.setAttribute("carTransmission", Transmission.class.getEnumConstants());
         req.getRequestDispatcher("/WEB-INF/views/car/carForm.xhtml").forward(req, res);
-    }
-
-    private void handleDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        var id = parseId(req);
-
-        var car = dao.get(id).orElseThrow();
-        dao.delete(car);
-
-        res.sendRedirect(req.getContextPath() + "/car/list");
-    }
-
-    private void handleDetails(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        var id = parseId(req);
-
-        var car = dao.get(id).orElseThrow();
-        req.setAttribute("car", car);
-        req.getRequestDispatcher("/WEB-INF/views/car/details.xhtml").forward(req, res);
-    }
-
-    private void handleList(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        var cars = dao.getAll();
-        req.setAttribute("carList", cars);
-        req.getRequestDispatcher("/WEB-INF/views/car/list.xhtml").forward(req, res);
     }
 }
