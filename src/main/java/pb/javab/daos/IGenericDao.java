@@ -10,7 +10,7 @@ public interface IGenericDao<T> {
 
     void update(T t);
 
-    Optional<T> get(int id);
+    Optional<T> get(Long id);
 
     List<T> getAll();
 }
