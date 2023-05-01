@@ -64,11 +64,11 @@ public class Car extends BaseModel {
         this.status = status;
     }
 
-    public Transmission getTransimition() {
+    public Transmission getTransmission() {
         return transmission;
     }
 
-    public void setTransimition(Transmission transmission) {
+    public void setTransmission(Transmission transmission) {
         this.transmission = transmission;
     }
 

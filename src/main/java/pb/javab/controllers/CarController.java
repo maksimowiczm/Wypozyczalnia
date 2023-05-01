@@ -11,6 +11,8 @@ import pb.javab.models.Transmission;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "CarController", urlPatterns = {"/car/list", "/car/edit/*", "/car/create", "/car/delete/*", "/car/details/*"})
 public class CarController extends GenericController<Car, ICarDao> {
@@ -37,7 +39,15 @@ public class CarController extends GenericController<Car, ICarDao> {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         var id = parseId(req);
-        var car = parseCar(req);
+
+        Map<String, String> errors = new HashMap<>();
+        var car = parseCar(req, errors);
+
+        if (!errors.isEmpty()) {
+            req.setAttribute("errors", errors);
+            handleGetForm(req, res, car);
+            return;
+        }
 
         if (id == null) {
             handleCreate(car);
@@ -68,13 +78,39 @@ public class CarController extends GenericController<Car, ICarDao> {
         dao.update(car);
     }
 
-    private Car parseCar(HttpServletRequest req) {
+    private Car parseCar(HttpServletRequest req, Map<String, String> errors) {
         var params = req.getParameterMap();
+
+        int power = 0;
+        BigDecimal rate = BigDecimal.ZERO;
         var model = params.get("model")[0];
         var manufacturer = params.get("manufacturer")[0];
-        var power = Integer.parseInt(params.get("power")[0]);
         var transmission = Transmission.valueOf(params.get("transmission")[0]);
-        var rate = new BigDecimal(params.get("rate")[0]);
+
+        if (model == null || model.isEmpty()) {
+            errors.put("model", "Pole nie może być puste");
+        }
+        if (manufacturer == null || manufacturer.isEmpty()) {
+            errors.put("manufacturer", "Pole nie może być puste");
+        }
+
+        try {
+            power = Integer.parseInt(params.get("power")[0]);
+            if (power <= 0) {
+                errors.put("power", "Moc musi być dodatnia");
+            }
+        } catch (NumberFormatException e) {
+            errors.put("power", "Niepoprawny format");
+        }
+
+        try {
+            rate = new BigDecimal(params.get("rate")[0]);
+            if (rate.compareTo(BigDecimal.ZERO) <= 0) {
+                errors.put("rate", "Cena musi być dodatnia");
+            }
+        } catch (NumberFormatException e) {
+            errors.put("rate", "Niepoprawny format");
+        }
 
         return new Car(model, manufacturer, power, CarStatus.AVAILABLE, transmission, rate);
     }
@@ -85,10 +121,21 @@ public class CarController extends GenericController<Car, ICarDao> {
             var id = Long.parseLong(idStr.substring(1));
             var car = dao.get(id).orElseThrow();
 
+            handleGetForm(req, res, car);
+            return;
+        }
+
+        req.setAttribute("carStatuses", CarStatus.class.getEnumConstants());
+        req.setAttribute("carTransmission", Transmission.class.getEnumConstants());
+        req.getRequestDispatcher("/WEB-INF/views/car/carForm.xhtml").forward(req, res);
+    }
+
+    private void handleGetForm(HttpServletRequest req, HttpServletResponse res, Car car) throws ServletException, IOException {
+        if (car != null) {
             req.setAttribute("model", car.getModel());
             req.setAttribute("manufacturer", car.getManufacturer());
             req.setAttribute("power", car.getPower());
-            req.setAttribute("transmission", car.getTransimition());
+            req.setAttribute("transmission", car.getTransmission());
             req.setAttribute("rate", car.getRate());
         }
 
@@ -107,6 +154,11 @@ public class CarController extends GenericController<Car, ICarDao> {
     }
 
     private void handleDetails(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        var id = parseId(req);
+
+        var car = dao.get(id).orElseThrow();
+        req.setAttribute("car", car);
+        req.getRequestDispatcher("/WEB-INF/views/car/details.xhtml").forward(req, res);
     }
 
     private void handleList(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

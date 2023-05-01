@@ -12,14 +12,17 @@
         <div>
             <label for="model">model</label>
             <input id="model" type="text" name="model" value="${fn:escapeXml(model)}"/>
+            <div>${errors.model}</div>
         </div>
         <div>
             <label for="manufacturer">manufacturer</label>
             <input id="manufacturer" type="text" name="manufacturer" value="${fn:escapeXml(manufacturer)}"/>
+            <div>${errors.manufacturer}</div>
         </div>
         <div>
             <label for="power">power</label>
             <input id="power" type="number" name="power" value="${fn:escapeXml(power)}"/>
+            <div>${errors.power}</div>
         </div>
         <div>
             <label for="transmission">transmission</label>
@@ -31,7 +34,8 @@
         </div>
         <div>
             <label for="rate">rate</label>
-            <input id="rate" type="number" name="rate" value="${fn:escapeXml(rate)}"/>
+            <input id="rate" type="number" step=".01" name="rate" value="${fn:escapeXml(rate)}"/>
+            <div>${errors.rate}</div>
         </div>
         <div>
             <input type="submit"/>
