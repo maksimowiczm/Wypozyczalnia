@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "my_user")
 public class User extends BaseModel {
     private String email;
     private String password;
