@@ -39,7 +39,6 @@ public class CarController extends GenericController<Car, ICarDao> {
     }
 
     private void handleList(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        dao.save(new Car());
         var cars = dao.getAll();
         req.setAttribute("carList", cars);
         req.getRequestDispatcher("/WEB-INF/views/car/list.xhtml").forward(req, res);
