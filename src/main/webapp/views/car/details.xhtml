@@ -6,28 +6,37 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
-    <f:metadata>
-        <o:viewParam name="id" value="#{carBean.car.id}"/>
-    </f:metadata>
+    <h:head>
 
-    <a href="list.xhtml">back</a>
-    <a href="${'form.xhtml?id='.concat(carBean.car.id)}">edit</a>
-    <div>id ${carBean.car.id}</div>
-    <div>model ${carBean.car.model}</div>
-    <div>manufacturer ${carBean.car.manufacturer}</div>
-    <div>power ${carBean.car.power}</div>
-    <div>status ${carBean.car.status}</div>
-    <div>transmission ${carBean.car.transmission}</div>
-    <div>rate ${carBean.car.rate}</div>
-    <div>
-        rentals
-        <c:forEach items='${carBean.car.carRentals}' var='rentals'>
-            <div>rentals.user.email</div>
-            <div>rentals.rentalStartDate</div>
-            <div>rentals.rentalEndDate</div>
-        </c:forEach>
-    </div>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <o:viewParam name="id" value="#{carBean.car.id}"/>
+        </f:metadata>
+
+        <a href="list.xhtml"> <p:button value="back"/></a>
+        <a href="${'form.xhtml?id='.concat(carBean.car.id)}"> <p:button value="edit"/></a>
+        <p:commandButton value="delete"
+                         action="${carBean.delete}"/>
+
+        <div>id ${carBean.car.id}</div>
+        <div>model ${carBean.car.model}</div>
+        <div>manufacturer ${carBean.car.manufacturer}</div>
+        <div>power ${carBean.car.power}</div>
+        <div>status ${carBean.car.status}</div>
+        <div>transmission ${carBean.car.transmission}</div>
+        <div>rate ${carBean.car.rate}</div>
+        <div>
+            rentals
+            <c:forEach items='${carBean.car.carRentals}' var='rentals'>
+                <div>rentals.user.email</div>
+                <div>rentals.rentalStartDate</div>
+                <div>rentals.rentalEndDate</div>
+            </c:forEach>
+        </div>
+    </h:body>
 </f:view>
 </html>

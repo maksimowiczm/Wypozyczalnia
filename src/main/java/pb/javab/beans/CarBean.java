@@ -72,4 +72,8 @@ public class CarBean implements Serializable {
 
         cars = null;
     }
+
+    public void delete() {
+        int i = 0;
+    }
 }
