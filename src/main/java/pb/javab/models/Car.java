@@ -1,6 +1,10 @@
 package pb.javab.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,11 +12,18 @@ import java.util.List;
 @Entity
 @Table(name = "car")
 public class Car extends BaseModel {
+    @NotNull
     private String model;
+    @NotNull
     private String manufacturer;
+    @Min(1)
+    @NotNull
     private int power;
     private CarStatus status;
+    @NotNull
     private Transmission transmission;
+    @Min(1)
+    @NotNull
     private BigDecimal rate;
 
     @OneToMany(mappedBy = "car", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -20,6 +31,16 @@ public class Car extends BaseModel {
 
     public Car() {
 
+    }
+
+    public Car(Car car) {
+        model = car.model;
+        manufacturer = car.manufacturer;
+        power = car.power;
+        status = car.status;
+        transmission = car.transmission;
+        rate = car.rate;
+        carRentals = car.carRentals;
     }
 
     public Car(String model, String manufacturer, int power, CarStatus status, Transmission transmission, BigDecimal rate) {
