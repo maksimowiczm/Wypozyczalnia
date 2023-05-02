@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "car")
@@ -107,5 +108,18 @@ public class Car extends BaseModel {
 
     public void setCarRentals(List<CarRental> carRentals) {
         this.carRentals = carRentals;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return power == car.power && Objects.equals(model, car.model) && Objects.equals(manufacturer, car.manufacturer) && status == car.status && transmission == car.transmission && Objects.equals(rate, car.rate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(model, manufacturer, power, status, transmission, rate);
     }
 }

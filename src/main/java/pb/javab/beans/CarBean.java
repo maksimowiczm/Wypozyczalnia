@@ -15,11 +15,19 @@ import java.util.List;
 @ViewScoped
 public class CarBean implements Serializable {
     private final ICarDao dao;
+    private List<Car> cars;
+    private Car car;
+
+    @Inject
+    public CarBean(ICarDao dao) {
+        this.dao = dao;
+    }
 
     public List<Car> getCars() {
         if (cars == null) {
             cars = dao.getAll();
         }
+
         return cars;
     }
 
@@ -30,6 +38,14 @@ public class CarBean implements Serializable {
     public Car getCar() {
         if (car == null)
             car = new Car();
+
+        // xddddddddddd
+        var id = car.getId();
+        if (id != null) {
+            if (car.getModel() == null)
+                car = dao.get(id).orElseThrow();
+        }
+
         return car;
     }
 
@@ -39,13 +55,6 @@ public class CarBean implements Serializable {
         }
     }
 
-    private List<Car> cars;
-    private Car car;
-
-    @Inject
-    public CarBean(ICarDao dao) {
-        this.dao = dao;
-    }
 
     public void persist() {
         if (car.getStatus() == null) {
@@ -55,6 +64,12 @@ public class CarBean implements Serializable {
             car.setCarRentals(new ArrayList<>());
         }
 
-        dao.save(car);
+        if (car.getId() != null) {
+            dao.update(car);
+        } else {
+            dao.save(car);
+        }
+
+        cars = null;
     }
 }

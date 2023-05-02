@@ -8,8 +8,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
+    <a href="form.xhtml">create</a>
     <c:forEach items='${carBean.cars}' var='car'>
         <div>${car.id}</div>
+        <div>${car.model}</div>
+        <div>${car.manufacturer}</div>
+        <a href="${'form.xhtml?id='.concat(car.id)}">edit</a>
     </c:forEach>
 </f:view>
 </html>

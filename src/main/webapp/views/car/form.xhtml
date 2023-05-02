@@ -10,6 +10,10 @@
 
 </h:head>
 <h:body>
+    <f:metadata>
+        <o:viewParam name="id" value="#{carBean.car.id}"/>
+    </f:metadata>
+
     <p:outputPanel>
         <h:form>
             <p:outputLabel value="Model:" for="modelInput"/>
