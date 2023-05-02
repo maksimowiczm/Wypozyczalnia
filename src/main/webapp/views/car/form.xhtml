@@ -21,7 +21,8 @@
             <p:message for="modelInput"/>
 
             <p:outputLabel value="Manufacturer:" for="manufacturerInput"/>
-            <p:inputText value="#{carBean.car.manufacturer}" id="manufacturerInput" label="manufacturer" required="true"/>
+            <p:inputText value="#{carBean.car.manufacturer}" id="manufacturerInput" label="manufacturer"
+                         required="true"/>
             <p:message for="manufacturerInput"/>
 
             <p:outputLabel value="Power:" for="powerInput"/>
@@ -42,9 +43,9 @@
             <p:message for="rateInput"/>
 
             <p:commandButton value="Save" icon="ui-icon-disk" actionListener="#{carBean.persist}"
-                             action="/views/car/car?faces-redirect=true" update="@form" />
+                             action="/views/car/list?faces-redirect=true" update="@form"/>
             <p:commandButton value="Cancel" icon="ui-icon-close"
-                             action="/views/car/car?faces-redirect=true" immediate="true" />
+                             action="/views/car/list?faces-redirect=true" immediate="true"/>
         </h:form>
     </p:outputPanel>
 </h:body>

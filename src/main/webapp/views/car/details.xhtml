@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<f:view>
+    <f:metadata>
+        <o:viewParam name="id" value="#{carBean.car.id}"/>
+    </f:metadata>
+
+    <a href="list.xhtml">back</a>
+    <a href="${'form.xhtml?id='.concat(carBean.car.id)}">edit</a>
+    <div>id ${carBean.car.id}</div>
+    <div>model ${carBean.car.model}</div>
+    <div>manufacturer ${carBean.car.manufacturer}</div>
+    <div>power ${carBean.car.power}</div>
+    <div>status ${carBean.car.status}</div>
+    <div>transmission ${carBean.car.transmission}</div>
+    <div>rate ${carBean.car.rate}</div>
+    <div>
+        rentals
+        <c:forEach items='${carBean.car.carRentals}' var='rentals'>
+            <div>rentals.user.email</div>
+            <div>rentals.rentalStartDate</div>
+            <div>rentals.rentalEndDate</div>
+        </c:forEach>
+    </div>
+</f:view>
+</html>
