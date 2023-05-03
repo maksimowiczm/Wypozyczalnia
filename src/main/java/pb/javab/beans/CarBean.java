@@ -57,6 +57,10 @@ public class CarBean implements Serializable {
 
 
     public void persist() {
+        if (car == null) {
+            return;
+        }
+
         if (car.getStatus() == null) {
             car.setStatus(CarStatus.AVAILABLE);
         }

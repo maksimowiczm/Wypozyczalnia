@@ -25,5 +25,8 @@ Funkcjonalności
  - rezerwacja + anulowanie rezerwacji ❌
 ### Testy
  - CarBean ❌
+   - persist ✔
+   - delete ❌
+   - getCar ❌
  - Dao ❌
    - CarDao ❌
