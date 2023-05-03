@@ -8,3 +8,22 @@ Funkcjonalności
 - Automatyczne cofanie rezerwacji (z powiadomieniem przez e-mail) w przypadku braku potwierdzenia otrzymania płatności do trzech godzin po złożeniu rezerwacji.
 - Przesyłanie wiadomości o złożonej rezerwacji/potwierdzeniu otrzymania płatności/anulowaniu rezerwacji.
 - Uwierzytelnianie.
+
+# TODO
+### Car CRUD ❌
+ - create ✔
+ - read ✔
+ - update ✔
+ - delete 🤡
+### System
+ - automatyczne cofanie rezerwacji ❌
+ - Uwierzytelnianie ❌
+### Strona klienta ❌
+ - rejestracja + logowanie ❌
+ - przeglądanie ofert wypożyczeń ❌
+ - przeglądanie swoich wypożyczeń ❌
+ - rezerwacja + anulowanie rezerwacji ❌
+### Testy
+ - CarBean ❌
+ - Dao ❌
+   - CarDao ❌
