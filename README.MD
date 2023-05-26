@@ -20,7 +20,7 @@ Funkcjonalności
  - Uwierzytelnianie ❌
 ### Strona klienta ❌
  - rejestracja + logowanie ❌
-   - walidacja emaila ❌
+   - walidacja emaila ✔
  - przeglądanie ofert wypożyczeń ❌
  - przeglądanie swoich wypożyczeń ❌
  - rezerwacja + anulowanie rezerwacji ❌

@@ -24,7 +24,13 @@
             <p:commandButton value="Login"/>
         </form>
         <c:if test="${param.error}">
-            Invalid Email/Password.
+            Unexpected error.
+        </c:if>
+        <c:if test="${param.bad_email}">
+            Invalid Email.
+        </c:if>
+        <c:if test="${param.bad_password}">
+            Invalid password.
         </c:if>
     </p:outputPanel>
 </h:body>

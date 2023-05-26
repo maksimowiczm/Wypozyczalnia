@@ -12,6 +12,7 @@ import pb.javab.models.User;
 import pb.javab.utils.UserService;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @WebServlet({"/login", "/register"})
 public class LoginServlet extends HttpServlet {
@@ -27,26 +28,66 @@ public class LoginServlet extends HttpServlet {
         req.getRequestDispatcher("login.xhtml").forward(req, resp);
     }
 
-    private void handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    private enum ValidatorResult {
+        EMAIL,
+        PASSWORD_DOESNT_MATCH,
+        BAD_PASSWORD,
+        ERROR,
+        SUCCESS,
+    }
+
+    private ValidatorResult validate(String email, String password) {
+        // Walidacja email
+        var pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+        var mat = pattern.matcher(email);
+        if (!mat.matches()) {
+            return ValidatorResult.EMAIL;
+        }
+        // Walidacja hasła
+        if (password.isEmpty()) {
+            return ValidatorResult.BAD_PASSWORD;
+        }
+
+        return ValidatorResult.SUCCESS;
+    }
+
+    private ValidatorResult handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var email = req.getParameter("email");
         var password = req.getParameter("password");
         var password1 = req.getParameter("password1");
 
-        //TODO walidacja danych
+        var valid = validate(email, password);
+        if (valid != ValidatorResult.SUCCESS) {
+            return valid;
+        }
+
+        // Porównanie haseł
+        if (!password.equals(password1)) {
+            return ValidatorResult.PASSWORD_DOESNT_MATCH;
+        }
+
+        // Rejestracja usera
         var user = new User();
         user.setEmail(email);
         user.setPassword(password);
 
         if (!userService.registerUser(user)) {
-            resp.sendRedirect("register.xhtml?error=true");
+            return ValidatorResult.ERROR;
         }
 
         handleLogin(req, resp);
+        return ValidatorResult.SUCCESS;
     }
 
-    private void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private ValidatorResult handleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var email = req.getParameter("email");
         var password = req.getParameter("password");
+
+        var valid = validate(email, password);
+        if (valid != ValidatorResult.SUCCESS) {
+            return valid;
+        }
 
         var user = new User();
         user.setEmail(email);
@@ -63,16 +104,31 @@ public class LoginServlet extends HttpServlet {
         } else {
             resp.sendRedirect("login?error=true");
         }
+
+        return ValidatorResult.SUCCESS;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var register = req.getParameter("register");
 
+        String location;
+        ValidatorResult result;
         if (register == null) {
-            handleLogin(req, resp);
+            result = handleLogin(req, resp);
+            location = "login.xhtml";
         } else {
-            handleRegister(req, resp);
+            result = handleRegister(req, resp);
+            location = "register.xhtml";
+        }
+        if (result == ValidatorResult.ERROR) {
+            resp.sendRedirect(location + "?error=true");
+        } else if (result == ValidatorResult.PASSWORD_DOESNT_MATCH) {
+            resp.sendRedirect(location + "?password_doesnt_match=true");
+        } else if (result == ValidatorResult.BAD_PASSWORD) {
+            resp.sendRedirect(location + "?bad_password=true");
+        } else if (result == ValidatorResult.EMAIL) {
+            resp.sendRedirect(location + "?bad_email=true");
         }
     }
 }
