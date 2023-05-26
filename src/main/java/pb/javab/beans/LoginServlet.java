@@ -9,17 +9,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import pb.javab.models.Role;
 import pb.javab.models.User;
-import pb.javab.utils.AuthenticationManager;
+import pb.javab.utils.UserService;
 
 import java.io.IOException;
 
 @WebServlet({"/login", "/register"})
 public class LoginServlet extends HttpServlet {
-    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     @Inject
-    public LoginServlet(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+    public LoginServlet(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -32,9 +32,16 @@ public class LoginServlet extends HttpServlet {
         var password = req.getParameter("password");
         var password1 = req.getParameter("password1");
 
-        //TODO register
+        //TODO walidacja danych
+        var user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
 
-        resp.sendRedirect("register?error=true");
+        if (!userService.registerUser(user)) {
+            resp.sendRedirect("register.xhtml?error=true");
+        }
+
+        handleLogin(req, resp);
     }
 
     private void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,7 +52,7 @@ public class LoginServlet extends HttpServlet {
         user.setEmail(email);
         user.setPassword(password);
 
-        if (authenticationManager.authenticate(user)) {
+        if (userService.authenticateUser(user)) {
             HttpSession session = req.getSession();
             session.setAttribute("isLoggedIn", true);
             session.setAttribute("email", email);

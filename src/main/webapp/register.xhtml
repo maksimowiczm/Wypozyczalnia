@@ -14,19 +14,19 @@
         <form method="post" action="register">
             <div>
                 <p:outputLabel for="email">Email:</p:outputLabel>
-                <p:inputText type="text" id="email" name="email"/>
+                <p:inputText type="text" id="email" name="email" required="true" />
             </div>
             <div>
                 <p:outputLabel for="password">Password:</p:outputLabel>
-                <p:inputText type="password" id="password" name="password"/>
+                <p:inputText type="password" id="password" name="password" required="true"/>
             </div>
             <div>
                 <p:outputLabel for="password1">Repeat password:</p:outputLabel>
-                <p:inputText type="password1" id="password1" name="password"/>
+                <p:inputText type="password1" id="password1" name="password" required="true"/>
             </div>
 
             <input id="register" name="register" type="hidden" value="true"/>
-            <p:commandButton value="Login"/>
+            <p:commandButton value="Register"/>
         </form>
         <c:if test="${param.error}">
             Invalid Email.
