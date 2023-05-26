@@ -31,8 +31,12 @@ public class UserService {
     }
 
     public boolean registerUser(User user) {
+        var db_user = userDao.getByEmail(user.getEmail());
+        if (db_user != null) {
+            return false;
+        }
+        
         userDao.save(user);
-        //TODO sprawdzenie czy user z tym emailem istnieje
         return true;
     }
 }
