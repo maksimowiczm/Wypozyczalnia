@@ -67,6 +67,7 @@ public class LoginServlet extends HttpServlet {
             return ValidatorResult.PASSWORD_DOESNT_MATCH;
         }
 
+        // TODO Haszowanie hasła
         // Rejestracja usera
         var user = new User();
         user.setEmail(email);
@@ -89,11 +90,12 @@ public class LoginServlet extends HttpServlet {
             return valid;
         }
 
+        // TODO Haszowanie hasła
         var user = new User();
         user.setEmail(email);
         user.setPassword(password);
 
-        if (userService.authenticateUser(user)) {
+        if (userService.authenticateAndAuthorizeUser(user)) {
             HttpSession session = req.getSession();
             session.setAttribute("isLoggedIn", true);
             session.setAttribute("email", email);

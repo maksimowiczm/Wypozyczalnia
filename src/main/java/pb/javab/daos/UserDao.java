@@ -11,6 +11,14 @@ public class UserDao extends GenericDao<User> implements IUserDao {
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        var query = em.createNamedQuery(User.findUserByEmail, User.class);
+        query.setParameter(1, email);
+        var result = query.getResultList();
+
+        if (result.isEmpty()) {
+            return null;
+        }
+
+        return result.get(0);
     }
 }

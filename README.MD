@@ -19,8 +19,10 @@ Funkcjonalności
  - automatyczne cofanie rezerwacji ❌
  - Uwierzytelnianie ❌
 ### Strona klienta ❌
- - rejestracja + logowanie ❌
+ - rejestracja ❌
    - walidacja emaila ✔
+   - haszowanie hasła ❌
+ - logowanie ✔
  - przeglądanie ofert wypożyczeń ❌
  - przeglądanie swoich wypożyczeń ❌
  - rezerwacja + anulowanie rezerwacji ❌

@@ -7,7 +7,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "my_user")
+@NamedQueries({
+        @NamedQuery(name = User.findUserByEmail, query = "select u from User u where u.email=?1")
+})
 public class User extends BaseModel {
+    public static final String findUserByEmail = "User.findUserByEmail";
     @Email
     private String email;
     private String password;

@@ -10,7 +10,7 @@ public abstract class GenericDao<T> implements IGenericDao<T> {
 
     protected final Class<T> type;
     @PersistenceContext(unitName = "defaultPU")
-    private EntityManager em;
+    protected EntityManager em;
 
     protected GenericDao(Class<T> type) {
         this.type = type;
