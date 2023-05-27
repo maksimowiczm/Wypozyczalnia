@@ -35,6 +35,6 @@ Funkcjonalności
    - CarDao ❌
  - Servlet ❌
    - RegisterServlet ✔
-     - doPost ✔
+     - handleRegister ✔
    - LoginServlet ❌
-     - doPost ❌
+     - handleLogin ❌

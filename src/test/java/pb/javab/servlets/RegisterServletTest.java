@@ -1,6 +1,5 @@
 package pb.javab.servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
@@ -8,10 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import pb.javab.beans.UserBean;
 import pb.javab.beans.UserService;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import pb.javab.utils.AuthorizationResult;
 
 import static org.mockito.Mockito.*;
 
@@ -33,7 +29,7 @@ class RegisterServletTest {
     }
 
     @Test
-    public void doPost_validData_callsUserBeanAndRedirectsToIndex() throws Exception {
+    public void handleRegister_validData_callsUserBeanAndReturnsSuccess() throws Exception {
         // arrange
         when(request.getParameter("email")).thenReturn("valid@email.com");
         when(request.getParameter("password")).thenReturn("password");
@@ -41,10 +37,70 @@ class RegisterServletTest {
         when(userService.registerUser(any())).thenReturn(true);
 
         // act
-        new RegisterServlet(userService, userBean).doPost(request, response);
+        var result = new RegisterServlet(userService, userBean).handleRegister(request, response);
 
         // assert
-        verify(response, times(1)).sendRedirect("");
+        assert result == AuthorizationResult.SUCCESS;
         verify(userBean, times(1)).setUser(any());
+    }
+
+    @Test
+    public void handleRegister_invalidEmail_returnsEmailError() throws Exception {
+        // arrange
+        when(request.getParameter("email")).thenReturn("@email.com");
+        when(request.getParameter("password")).thenReturn("password");
+        when(request.getParameter("password1")).thenReturn("password");
+        when(userService.registerUser(any())).thenReturn(true);
+
+        // act
+        var result = new RegisterServlet(userService, userBean).handleRegister(request, response);
+
+        // assert
+        assert result == AuthorizationResult.BAD_EMAIL;
+    }
+
+    @Test
+    public void handleRegister_notMatchingPasswords_returnsEmailError() throws Exception {
+        // arrange
+        when(request.getParameter("email")).thenReturn("valid@email.com");
+        when(request.getParameter("password")).thenReturn("password");
+        when(request.getParameter("password1")).thenReturn("password1");
+        when(userService.registerUser(any())).thenReturn(true);
+
+        // act
+        var result = new RegisterServlet(userService, userBean).handleRegister(request, response);
+
+        // assert
+        assert result == AuthorizationResult.PASSWORD_DOESNT_MATCH;
+    }
+
+    @Test
+    public void handleRegister_invalidPassword_returnsEmailError() throws Exception {
+        // arrange
+        when(request.getParameter("email")).thenReturn("valid@email.com");
+        when(request.getParameter("password")).thenReturn("");
+        when(request.getParameter("password1")).thenReturn("");
+        when(userService.registerUser(any())).thenReturn(true);
+
+        // act
+        var result = new RegisterServlet(userService, userBean).handleRegister(request, response);
+
+        // assert
+        assert result == AuthorizationResult.BAD_PASSWORD;
+    }
+
+    @Test
+    public void handleRegister_UserServiceReturnFalse_returnsError() throws Exception {
+        // arrange
+        when(request.getParameter("email")).thenReturn("valid@email.com");
+        when(request.getParameter("password")).thenReturn("password");
+        when(request.getParameter("password1")).thenReturn("password");
+        when(userService.registerUser(any())).thenReturn(false);
+
+        // act
+        var result = new RegisterServlet(userService, userBean).handleRegister(request, response);
+
+        // assert
+        assert result == AuthorizationResult.ERROR;
     }
 }

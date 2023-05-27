@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("login.xhtml?password_doesnt_match=true");
         } else if (result == AuthorizationResult.BAD_PASSWORD) {
             resp.sendRedirect("login.xhtml?bad_password=true");
-        } else if (result == AuthorizationResult.EMAIL) {
+        } else if (result == AuthorizationResult.BAD_EMAIL) {
             resp.sendRedirect("login.xhtml?bad_email=true");
         }
     }

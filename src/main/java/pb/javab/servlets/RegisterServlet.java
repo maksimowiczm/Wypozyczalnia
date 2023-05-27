@@ -39,14 +39,14 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("register.xhtml?password_doesnt_match=true");
         } else if (result == AuthorizationResult.BAD_PASSWORD) {
             resp.sendRedirect("register.xhtml?bad_password=true");
-        } else if (result == AuthorizationResult.EMAIL) {
+        } else if (result == AuthorizationResult.BAD_EMAIL) {
             resp.sendRedirect("register.xhtml?bad_email=true");
-        } else{
+        } else {
             resp.sendRedirect("");
         }
     }
 
-    private AuthorizationResult handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    AuthorizationResult handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var email = req.getParameter("email");
         var password = req.getParameter("password");
         var password1 = req.getParameter("password1");

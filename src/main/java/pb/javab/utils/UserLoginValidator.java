@@ -8,7 +8,7 @@ public class UserLoginValidator {
         var pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
         var mat = pattern.matcher(email);
         if (!mat.matches()) {
-            return AuthorizationResult.EMAIL;
+            return AuthorizationResult.BAD_EMAIL;
         }
         // Walidacja hasła
         if (password.isEmpty()) {
