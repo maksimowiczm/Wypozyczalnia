@@ -6,9 +6,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pb.javab</groupId>
-    <artifactId>Projekt</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>Projekt</name>
+    <artifactId>Wypozyczalnia</artifactId>
+    <version>1</version>
+    <name>Wypozyczalnia</name>
     <packaging>war</packaging>
 
     <properties>
