@@ -6,11 +6,18 @@ import pb.javab.beans.UserBean;
 import pb.javab.models.Role;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @WebFilter("*")
-public class GuestFilter extends AuthenticationFilter {
+public class GuestFilter extends AuthorizationFilter {
+    private static final List<Pattern> patterns = List.of(
+            Pattern.compile("^/$"),
+            Pattern.compile("^/index"),
+            Pattern.compile("^/login"),
+            Pattern.compile("^/register"));
+
     @Inject
     public GuestFilter(UserBean userBean) {
-        super(userBean, List.of("/", "/index.xhtml", "/index", "/login", "/login.xhtml", "/register", "/register.xhtml"), null);
+        super(userBean, patterns, Role.GUEST);
     }
 }

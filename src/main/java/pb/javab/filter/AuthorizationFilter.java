@@ -9,13 +9,14 @@ import pb.javab.utils.RoleAuthentication;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
-public abstract class AuthenticationFilter implements Filter {
+public abstract class AuthorizationFilter implements Filter {
     private final UserBean userBean;
-    private final List<String> allowedEndpoints;
+    private final List<Pattern> allowedEndpoints;
     private final Role allowedRole;
 
-    public AuthenticationFilter(UserBean userBean, List<String> allowedEndpoints, Role allowedRole) {
+    public AuthorizationFilter(UserBean userBean, List<Pattern> allowedEndpoints, Role allowedRole) {
         this.userBean = userBean;
         this.allowedEndpoints = allowedEndpoints;
         this.allowedRole = allowedRole;
@@ -27,20 +28,28 @@ public abstract class AuthenticationFilter implements Filter {
         var res = (HttpServletResponse) response;
         var action = req.getServletPath();
 
+        // jeśli rola wyższa niż wymagana przekaż dalej
+        var user = userBean.getUser();
+        if (user != null && RoleAuthentication.authenticate(user.getRole(), allowedRole)) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         for (var i : allowedEndpoints) {
-            if (action.equals(i)) {
-                // Gość
-                if (allowedRole == null) {
-                    chain.doFilter(request, response);
-                    return;
-                }
+            var m = i.matcher(action);
+            if (m.find()) {
                 // Redirect do loginu, jeśli user może tam wejść
-                if (allowedRole == Role.USER && userBean.getUser() == null) {
+                if (allowedRole == Role.USER && user == null) {
                     res.sendRedirect("login");
                     return;
                 }
-                // http 404, jeśli user nie może tam wejść
-                if (userBean.getUser() == null || RoleAuthentication.authenticate(userBean.getUser().getRole(), allowedRole)) {
+                // Na guest endpointy można wejść bez autoryzacji
+                if (allowedRole == Role.GUEST) {
+                    chain.doFilter(request, response);
+                    return;
+                }
+                // Autoryzacja
+                if (user == null || !RoleAuthentication.authenticate(user.getRole(), allowedRole)) {
                     res.sendError(404);
                     return;
                 }
