@@ -1,39 +1,55 @@
 package pb.javab.filter;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import pb.javab.beans.UserBean;
+import pb.javab.models.Role;
+import pb.javab.utils.RoleAuthentication;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebFilter("/*")
-public class AuthenticationFilter implements Filter {
+public abstract class AuthenticationFilter implements Filter {
+    private final UserBean userBean;
+    private final List<String> allowedEndpoints;
+    private final Role allowedRole;
+
+    public AuthenticationFilter(UserBean userBean, List<String> allowedEndpoints, Role allowedRole) {
+        this.userBean = userBean;
+        this.allowedEndpoints = allowedEndpoints;
+        this.allowedRole = allowedRole;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         var req = (HttpServletRequest) request;
         var res = (HttpServletResponse) response;
         var action = req.getServletPath();
 
-        var allowed = List.of("/", "/index.xhtml", "/index",
-                "/login", "/login.xhtml",
-                "/register", "/register.xhtml");
-        for (var i : allowed) {
+        for (var i : allowedEndpoints) {
             if (action.equals(i)) {
+                // Gość
+                if (allowedRole == null) {
+                    chain.doFilter(request, response);
+                    return;
+                }
+                // Redirect do loginu, jeśli user może tam wejść
+                if (allowedRole == Role.USER && userBean.getUser() == null) {
+                    res.sendRedirect("login");
+                    return;
+                }
+                // http 404, jeśli user nie może tam wejść
+                if (userBean.getUser() == null || RoleAuthentication.authenticate(userBean.getUser().getRole(), allowedRole)) {
+                    res.sendError(404);
+                    return;
+                }
+
                 chain.doFilter(request, response);
                 return;
             }
         }
 
-        HttpSession session = req.getSession();
-        var email = session.getAttribute("email");
-
-        if (email == null) {
-            return;
-        }
-
-        chain.doFilter(request, response);
+        res.sendError(404);
     }
 }
