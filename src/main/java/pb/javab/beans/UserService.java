@@ -15,12 +15,6 @@ public class UserService {
     @Inject
     public void init(IUserDao userDao) {
         this.userDao = userDao;
-
-        var admin = new User();
-        admin.setRole(Role.ADMIN);
-        admin.setEmail("admin@a.aa");
-        admin.setPassword("admin");
-        userDao.save(admin);
     }
 
     public boolean authenticateAndAuthorizeUser(User user) {
