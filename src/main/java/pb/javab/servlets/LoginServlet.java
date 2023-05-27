@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
         req.getRequestDispatcher("login.xhtml").forward(req, resp);
     }
 
-    private AuthorizationResult handleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected AuthorizationResult handleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var email = req.getParameter("email");
         var password = req.getParameter("password");
 
@@ -48,18 +48,10 @@ public class LoginServlet extends HttpServlet {
 
         if (userService.authenticateAndAuthorizeUser(user)) {
             userBean.setUser(user);
-            HttpSession session = req.getSession();
-            session.setAttribute("isLoggedIn", true);
-            session.setAttribute("email", email);
-            if (user.getRole() == Role.ADMIN) {
-                session.setAttribute("admin", true);
-            }
-            resp.sendRedirect("");
+            return AuthorizationResult.SUCCESS;
         } else {
-            resp.sendRedirect("login?error=true");
+            return AuthorizationResult.ERROR;
         }
-
-        return AuthorizationResult.SUCCESS;
     }
 
     @Override
@@ -73,6 +65,8 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("login.xhtml?bad_password=true");
         } else if (result == AuthorizationResult.BAD_EMAIL) {
             resp.sendRedirect("login.xhtml?bad_email=true");
+        } else if(result == AuthorizationResult.SUCCESS) {
+            resp.sendRedirect("");
         }
     }
 }

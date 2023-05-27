@@ -33,8 +33,10 @@ Funkcjonalności
    - getCar ❌
  - Dao ❌
    - CarDao ❌
- - Servlet ❌
+ - Servlet ✔
    - RegisterServlet ✔
      - handleRegister ✔
-   - LoginServlet ❌
-     - handleLogin ❌
+   - LoginServlet ✔
+     - handleLogin ✔
+ - UserService ❌
+   - authenticateAndAuthorizeUser ❌

@@ -46,7 +46,7 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 
-    AuthorizationResult handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected AuthorizationResult handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var email = req.getParameter("email");
         var password = req.getParameter("password");
         var password1 = req.getParameter("password1");

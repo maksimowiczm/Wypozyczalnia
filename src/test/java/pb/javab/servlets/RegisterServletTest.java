@@ -75,7 +75,7 @@ class RegisterServletTest {
     }
 
     @Test
-    public void handleRegister_invalidPassword_returnsEmailError() throws Exception {
+    public void handleRegister_invalidPassword_returnsBadPassword() throws Exception {
         // arrange
         when(request.getParameter("email")).thenReturn("valid@email.com");
         when(request.getParameter("password")).thenReturn("");
