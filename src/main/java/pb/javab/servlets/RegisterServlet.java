@@ -41,8 +41,9 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("register.xhtml?bad_password=true");
         } else if (result == AuthorizationResult.EMAIL) {
             resp.sendRedirect("register.xhtml?bad_email=true");
+        } else{
+            resp.sendRedirect("");
         }
-        resp.sendRedirect("");
     }
 
     private AuthorizationResult handleRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -73,5 +74,4 @@ public class RegisterServlet extends HttpServlet {
         userBean.setUser(user);
         return AuthorizationResult.SUCCESS;
     }
-
 }

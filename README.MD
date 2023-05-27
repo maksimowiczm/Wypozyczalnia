@@ -33,3 +33,8 @@ Funkcjonalności
    - getCar ❌
  - Dao ❌
    - CarDao ❌
+ - Servlet ❌
+   - RegisterServlet ✔
+     - doPost ✔
+   - LoginServlet ❌
+     - doPost ❌
