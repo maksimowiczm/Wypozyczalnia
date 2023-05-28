@@ -10,11 +10,11 @@ Funkcjonalności
 - Uwierzytelnianie.
 
 # TODO
-### Car CRUD ❌
+### Car CRUD ✔
  - create ✔ Mateusz
  - read ✔ Mateusz
  - update ✔ Mateusz
- - delete 🤡
+ - delete ✔ Piotrek
 ### System
  - automatyczne cofanie rezerwacji ❌
  - Uwierzytelnianie ❌
@@ -29,7 +29,7 @@ Funkcjonalności
 ### Testy
  - CarBean ❌
    - persist ✔ Mateusz
-   - delete ❌
+   - delete ✔ Piotrek
    - getCar ❌
  - Dao ❌
    - CarDao ❌
