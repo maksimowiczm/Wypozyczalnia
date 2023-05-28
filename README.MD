@@ -11,32 +11,32 @@ Funkcjonalności
 
 # TODO
 ### Car CRUD ❌
- - create ✔
- - read ✔
- - update ✔
+ - create ✔ Mateusz
+ - read ✔ Mateusz
+ - update ✔ Mateusz
  - delete 🤡
 ### System
  - automatyczne cofanie rezerwacji ❌
  - Uwierzytelnianie ❌
 ### Strona klienta ❌
  - rejestracja ❌
-   - walidacja emaila ✔
+   - walidacja emaila ✔ Mateusz
    - haszowanie hasła ❌
- - logowanie ✔
+ - logowanie ✔ Mateusz
  - przeglądanie ofert wypożyczeń ❌
  - przeglądanie swoich wypożyczeń ❌
  - rezerwacja + anulowanie rezerwacji ❌
 ### Testy
  - CarBean ❌
-   - persist ✔
+   - persist ✔ Mateusz
    - delete ❌
    - getCar ❌
  - Dao ❌
    - CarDao ❌
- - Servlet ✔
-   - RegisterServlet ✔
-     - handleRegister ✔
-   - LoginServlet ✔
-     - handleLogin ✔
+ - Servlet ✔ Mateusz
+   - RegisterServlet ✔ Mateusz
+     - handleRegister ✔ Mateusz
+   - LoginServlet ✔ Mateusz
+     - handleLogin ✔ Mateusz
  - UserService ❌
    - authenticateAndAuthorizeUser ❌
