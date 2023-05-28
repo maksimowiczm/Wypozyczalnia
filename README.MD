@@ -17,7 +17,7 @@ Funkcjonalności
  - delete 🤡
 ### System
  - automatyczne cofanie rezerwacji ❌
- - Uwierzytelnianie ❌
+ - Uwierzytelnianie 🚧 Mateusz
 ### Strona klienta ❌
  - rejestracja ❌
    - walidacja emaila ✔ Mateusz
