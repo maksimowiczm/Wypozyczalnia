@@ -40,7 +40,7 @@ public class Configuration {
         var car2 = new Car("emszesc", "Beemwu", 269, CarStatus.AVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
         carDao.save(car);
 
-        var car3 = new Car("Rdzazda", "Mazda", 100, CarStatus.UNAVILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
+        var car3 = new Car("Rdzazda", "Mazda", 100, CarStatus.UNAVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
         carDao.save(car);
     }
 }

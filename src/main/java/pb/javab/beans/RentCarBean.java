@@ -12,12 +12,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/*
+* Bean used for renting available cars
+* */
 @Named
 @ViewScoped
 public class RentCarBean implements Serializable {
     private final ICarDao carDao;
     private final ICarRentalDao carRentalDao;
-    private List<Car> avilableCars;
+    private List<Car> availableCars;
     private Car rentCar;
 
     @Inject
@@ -26,16 +30,16 @@ public class RentCarBean implements Serializable {
         this.carRentalDao = carRentalDao;
     }
 
-    public List<Car> getAvilableCars() {
-        if(avilableCars == null)
-            avilableCars = carDao.getAll().stream()
+    public List<Car> getAvailableCars() {
+        if(availableCars == null)
+            availableCars = carDao.getAll().stream()
                     .filter(x->x.getStatus()== CarStatus.AVAILABLE)
                     .collect(Collectors.toList());
-        return avilableCars;
+        return availableCars;
     }
 
-    public void setAvilableCars(List<Car> avilableCars) {
-        this.avilableCars = avilableCars;
+    public void setAvailableCars(List<Car> availableCars) {
+        this.availableCars = availableCars;
     }
 
     public Car getRentCar() {
