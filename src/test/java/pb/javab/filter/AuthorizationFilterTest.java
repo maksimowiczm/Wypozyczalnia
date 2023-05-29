@@ -70,4 +70,14 @@ class AuthorizationFilterTest {
 
         verify(response, times(1)).sendRedirect("/login");
     }
+
+    @Test
+    public void doFilter_guestRequestsForbiddenSite_callsResponseSendError() throws ServletException, IOException {
+        when(userBean.getUser()).thenReturn(null);
+        when(request.getServletPath()).thenReturn("/views/admin");
+
+        new AuthorizationFilter(userBean).doFilter(request, response, chain);
+
+        verify(response, times(1)).sendError(404);
+    }
 }
