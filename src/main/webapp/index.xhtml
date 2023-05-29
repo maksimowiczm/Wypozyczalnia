@@ -24,8 +24,8 @@
                 <div>${userBean.user.email}<a href="logout"> logout</a></div>
             </c:if>
         </div>
-        <c:if test="${userBean.user != null and userBean.user.role != 'ADMIN'}">
-            <a href="views/guest/car/list.xhtml">cars crud</a>
+        <c:if test="${userBean.user == null or userBean.user.role != 'ADMIN'}">
+            <a href="views/guest/availableCarList.xhtml">rent a car</a>
         </c:if>
         <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
             <a href="views/admin/car/list.xhtml">cars crud</a>

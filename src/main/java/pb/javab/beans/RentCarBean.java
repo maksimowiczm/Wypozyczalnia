@@ -4,7 +4,6 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pb.javab.daos.ICarDao;
-import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.Car;
 import pb.javab.models.CarStatus;
 
@@ -14,20 +13,18 @@ import java.util.stream.Collectors;
 
 
 /*
-* Bean used for renting available cars
+* Bean used for renting available cars as user
 * */
 @Named
 @ViewScoped
 public class RentCarBean implements Serializable {
     private final ICarDao carDao;
-    private final ICarRentalDao carRentalDao;
     private List<Car> availableCars;
     private Car rentCar;
 
     @Inject
-    public RentCarBean(ICarDao carDao, ICarRentalDao carRentalDao) {
+    public RentCarBean(ICarDao carDao) {
         this.carDao = carDao;
-        this.carRentalDao = carRentalDao;
     }
 
     public List<Car> getAvailableCars() {
@@ -43,6 +40,14 @@ public class RentCarBean implements Serializable {
     }
 
     public Car getRentCar() {
+        if(rentCar == null)
+            rentCar = new Car();
+
+        var id = rentCar.getId();
+        if (id != null) {
+            if (rentCar.getModel() == null)
+                rentCar = carDao.get(id).orElseThrow();
+        }
         return rentCar;
     }
 

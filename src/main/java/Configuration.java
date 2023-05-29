@@ -38,9 +38,9 @@ public class Configuration {
         carDao.save(car);
 
         var car2 = new Car("emszesc", "Beemwu", 269, CarStatus.AVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
-        carDao.save(car);
+        carDao.save(car2);
 
         var car3 = new Car("Rdzazda", "Mazda", 100, CarStatus.UNAVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
-        carDao.save(car);
+        carDao.save(car3);
     }
 }

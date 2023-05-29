@@ -14,7 +14,8 @@ public class GuestFilter extends AuthorizationFilter {
             Pattern.compile("^/$"),
             Pattern.compile("^/index"),
             Pattern.compile("^/login"),
-            Pattern.compile("^/register"));
+            Pattern.compile("^/register"),
+            Pattern.compile("^/views/guest"));
 
     @Inject
     public GuestFilter(UserBean userBean) {
