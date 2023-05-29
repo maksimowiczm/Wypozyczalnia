@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import pb.javab.beans.UserBean;
-import pb.javab.beans.UserService;
+import pb.javab.services.UserService;
 import pb.javab.utils.AuthorizationResult;
 
 import static org.mockito.Mockito.*;

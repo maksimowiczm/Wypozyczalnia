@@ -1,4 +1,4 @@
-package pb.javab.beans;
+package pb.javab.services;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
