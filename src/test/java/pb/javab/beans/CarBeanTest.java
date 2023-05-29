@@ -8,6 +8,7 @@ import pb.javab.models.Car;
 import pb.javab.models.CarStatus;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -99,5 +100,56 @@ class CarBeanTest {
 
         // assert
         verify(car, never()).setStatus(any());
+    }
+
+    @Test
+    public void delete_whenCarIsNull_doesntCallDaoDelete() {
+        // arrange
+        carBean.setCar(null);
+
+        // act
+        carBean.delete();
+
+        // assert
+        verify(carDao, never()).delete(any());
+    }
+
+    @Test
+    public void delete_whenCarIsNotNull_CallsDaoDelete() {
+        // arrange
+        var car = Mockito.mock(Car.class);
+        carBean.setCar(car);
+
+        // act
+        carBean.delete();
+
+        // assert
+        verify(carDao, times(1)).delete(car);
+    }
+
+    @Test
+    public void delete_whenExistingCarIdGivenAsParameter_CallsDaoDelete() {
+        // arrange
+        var car = Mockito.mock(Car.class);
+        car.setId(3L);
+        when(carDao.get(3L)).thenReturn(Optional.of(car));
+
+        // act
+        carBean.delete(3);
+
+        // assert
+        verify(carDao, times(1)).delete(car);
+    }
+
+    @Test
+    public void delete_whenNonExistingCarIdGivenAsParameter_doesntCallDaoDelete() {
+        // arrange
+        when(carDao.get(3L)).thenReturn(Optional.empty());
+
+        // act
+        carBean.delete(3);
+
+        // assert
+        verify(carDao, times(0)).delete(any());
     }
 }

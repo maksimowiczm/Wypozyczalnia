@@ -15,8 +15,12 @@
             <div>${car.id}</div>
             <div>${car.model}</div>
             <div>${car.manufacturer}</div>
-            <a href="${'form.xhtml?id='.concat(car.id)}"><p:button value="edit"/></a>
-            <a href="${'details.xhtml?id='.concat(car.id)}"><p:button value="details"/></a>
+            <h:form>
+                <a href="${'form.xhtml?id='.concat(car.id)}"><p:button value="edit"/></a>
+                <a href="${'details.xhtml?id='.concat(car.id)}"><p:button value="details"/></a>
+                <p:commandButton value="delete" actionListener="${carBean.delete(car.id)}"
+                                 action="/views/admin/car/list?faces-redirect=true"/>
+            </h:form>
         </c:forEach>
     </h:body>
 </f:view>

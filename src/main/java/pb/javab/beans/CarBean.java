@@ -55,6 +55,17 @@ public class CarBean implements Serializable {
         }
     }
 
+    public void delete() {
+        if (car == null) return;
+        dao.delete(car);
+        car = null;
+    }
+
+    public void delete(long id) {
+        var carToDelete = dao.get(id).orElse(null);
+        if (carToDelete == null) return;
+        dao.delete(carToDelete);
+    }
 
     public void persist() {
         if (car == null) {
@@ -75,9 +86,5 @@ public class CarBean implements Serializable {
         }
 
         cars = null;
-    }
-
-    public void delete() {
-        int i = 0;
     }
 }

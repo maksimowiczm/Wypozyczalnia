@@ -19,8 +19,10 @@
 
         <a href="list.xhtml"> <p:button value="back"/></a>
         <a href="${'form.xhtml?id='.concat(carBean.car.id)}"> <p:button value="edit"/></a>
-        <p:commandButton value="delete"
-                         action="${carBean.delete}"/>
+        <h:form>
+            <p:commandButton value="delete" actionListener="${carBean.delete()}"
+                             action="/views/admin/car/list?faces-redirect=true"/>
+        </h:form>
 
         <div>id ${carBean.car.id}</div>
         <div>model ${carBean.car.model}</div>
