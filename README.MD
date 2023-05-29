@@ -40,3 +40,5 @@ Funkcjonalności
      - handleLogin ✔ Mateusz
  - UserService ❌
    - authenticateAndAuthorizeUser ❌
+ - AuthorizationFilter ❌
+   - doFilter 🚧 Mateusz 
