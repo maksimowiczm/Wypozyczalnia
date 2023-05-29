@@ -40,6 +40,7 @@ public abstract class AuthorizationFilter implements Filter {
             if (m.find()) {
                 // Redirect do loginu, jeśli user może tam wejść
                 if (allowedRole == Role.USER && user == null) {
+                    // TODO naprawienie redirecta
                     res.sendRedirect("login");
                     return;
                 }

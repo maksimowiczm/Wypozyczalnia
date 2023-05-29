@@ -8,6 +8,7 @@ import pb.javab.models.Role;
 import java.util.List;
 import java.util.regex.Pattern;
 
+// TODO filtr działa tylko jak się zalogujesz XD?
 @WebFilter("/views/user/*")
 public class UserFilter extends AuthorizationFilter {
     @Inject
