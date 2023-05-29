@@ -16,7 +16,7 @@ Funkcjonalności
  - update ✔ Mateusz
  - delete ✔ Piotrek
 ### System
- - automatyczne cofanie rezerwacji ❌
+ - automatyczne cofanie rezerwacji 🚧 Mateusz
  - Uwierzytelnianie 🚧 Mateusz
 ### Strona klienta ❌
  - rejestracja ❌

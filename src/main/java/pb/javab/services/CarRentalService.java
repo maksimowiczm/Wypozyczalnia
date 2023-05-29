@@ -1,5 +1,6 @@
 package pb.javab.services;
 
+import jakarta.ejb.Schedule;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import pb.javab.daos.CarRentalDao;
@@ -28,5 +29,11 @@ public class CarRentalService implements ICarRentalService {
     @Override
     public boolean cancel(CarStatus carRental) {
         return false;
+    }
+
+    // TODO
+    @Schedule(hour = "*/3", minute = "*", second = "*", persistent = false)
+    private void cancelNotPayedReservations() {
+        // TODO wysylanie maila
     }
 }
