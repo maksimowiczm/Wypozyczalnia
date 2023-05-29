@@ -8,15 +8,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
+    <h:head></h:head>
     <h:body>
         <c:forEach items='${rentCarBean.availableCars}' var='car'>
             <div>${car.id}</div>
             <div>${car.model}</div>
             <div>${car.manufacturer}</div>
-            <h:form>
-                <a href="${'availableCarDetails.xhtml?id='.concat(car.id)}"><p:button value="details"/></a>
-                <a href=""><p:button value="rent"/></a>
-            </h:form>
+            <a href="${'availableCarDetails.xhtml?id='.concat(car.id)}"><p:button value="details"/></a>
+            <a href="${'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(car.id)}"><p:button value="rent"/></a>
         </c:forEach>
     </h:body>
 </f:view>

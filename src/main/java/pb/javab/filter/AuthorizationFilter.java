@@ -12,16 +12,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-@WebFilter("*")
+//TODO:Move all views to /views folder
+@WebFilter("/views/*")
 public class AuthorizationFilter implements Filter {
     private final UserBean userBean;
     private static final List<Pattern> guestUrls = List.of(
             Pattern.compile("^/$"),
-            Pattern.compile("^/index"),
             Pattern.compile("^/login"),
-            Pattern.compile("^/register"));
+            Pattern.compile("^/register"),
+            Pattern.compile("^/views/guest")
+    );
 
     private static final List<Pattern> userUrls = List.of(
+            Pattern.compile("^/index"),
+            Pattern.compile("^/logout"),
+            Pattern.compile("^/views/guest"),
             Pattern.compile("^/views/user")
     );
 
@@ -62,8 +67,7 @@ public class AuthorizationFilter implements Filter {
             if (guestFilter(action)) {
                 chain.doFilter(request, response);
             } else if (userFilter(action)) {
-                // TODO redirect fix
-                res.sendRedirect("/login");
+                res.sendRedirect("/Wypozyczalnia-1/login");
             } else {
                 res.sendError(404);
             }

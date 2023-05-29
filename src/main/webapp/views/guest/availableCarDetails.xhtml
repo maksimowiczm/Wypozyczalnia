@@ -13,22 +13,22 @@
 
     </h:head>
     <h:body>
+
         <f:metadata>
             <o:viewParam name="id" value="#{rentCarBean.rentCar.id}"/>
         </f:metadata>
 
+        <div>id ${rentCarBean.rentCar.id}</div>
+        <div>model ${rentCarBean.rentCar.model}</div>
+        <div>manufacturer ${rentCarBean.rentCar.manufacturer}</div>
+        <div>power ${rentCarBean.rentCar.power}</div>
+        <div>status ${rentCarBean.rentCar.status}</div>
+        <div>transmission ${rentCarBean.rentCar.transmission}</div>
+        <div>rate ${rentCarBean.rentCar.rate}</div>
+
         <a href="availableCarList.xhtml"> <p:button value="back"/></a>
         <a href="${'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(rentCarBean.rentCar.id)}"> <p:button
                 value="rent"/></a>
-
-        <div>id ${carBean.car.id}</div>
-        <div>model ${carBean.car.model}</div>
-        <div>manufacturer ${carBean.car.manufacturer}</div>
-        <div>power ${carBean.car.power}</div>
-        <div>status ${carBean.car.status}</div>
-        <div>transmission ${carBean.car.transmission}</div>
-        <div>rate ${carBean.car.rate}</div>
-
     </h:body>
 </f:view>
 </html>

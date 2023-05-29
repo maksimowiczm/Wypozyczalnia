@@ -6,16 +6,17 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui">
-<h:head>
+<f:view>
+    <h:head>
 
-</h:head>
-<h:body>
-    <f:metadata>
-        <o:viewParam name="id" value="#{rentCarBean.rentCar.id}"/>
-    </f:metadata>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <o:viewParam name="id" value="#{rentCarBean.rentCar.id}"/>
+        </f:metadata>
 
-    <p:outputPanel>
-        <h:form>
+        <p:outputPanel>
+
             <div>id ${rentCarBean.rentCar.id}</div>
             <div>model ${rentCarBean.rentCar.model}</div>
             <div>manufacturer ${rentCarBean.rentCar.manufacturer}</div>
@@ -23,26 +24,33 @@
             <div>status ${rentCarBean.rentCar.status}</div>
             <div>transmission ${rentCarBean.rentCar.transmission}</div>
             <div>rate ${rentCarBean.rentCar.rate}</div>
+            <h:form>
+                <p:outputLabel value="Price: "/>
+                <p:inputText id="price" value="#{rentCarBean.carRental.price}"
+                             required="true"
+                             readonly="true"/>
+                <p:message for="price"/>
 
-            <p:outputLabel id="price" value="Price: #{rentCarBean.carRental.price}"/>
+                <p:outputLabel value="Start date:" for="startDateInput"/>
+                <p:datePicker id="startDateInput" value="#{rentCarBean.carRental.rentalStartDate}" required="true">
+                    <p:ajax event="dateSelect" listener="#{rentCarBean.onStartDateSelect}" update="price"/>
+                </p:datePicker>
+                <p:message for="startDateInput"/>
 
-            <p:outputLabel value="Start date:" for="startDateInput"/>
-            <p:datePicker id="startDateInput" value="#{rentCarBean.carRental.rentalStartDate}">
-                <p:ajax event="dateSelect" listener="#{rentCarBean.onStartDateSelect}" update="price"/>
-            </p:datePicker>
-            <p:message for="startDateInput"/>
+                <p:outputLabel value="End date:" for="endDateInput"/>
+                <p:datePicker id="endDateInput" value="#{rentCarBean.carRental.rentalEndDate}" required="true">
+                    <p:ajax event="dateSelect" listener="#{rentCarBean.onEndDateSelect}" update="price"/>
+                </p:datePicker>
+                <p:message for="endDateInput"/>
 
-            <p:outputLabel value="End date:" for="endDateInput"/>
-            <p:datePicker id="endDateInput" value="#{rentCarBean.carRental.rentalEndDate}">
-                <p:ajax event="dateSelect" listener="#{rentCarBean.onEndDateSelect}" update="price"/>
-            </p:datePicker>
-            <p:message for="endDateInput"/>
-
-            <p:commandButton value="Rent" icon="ui-icon-disk" actionListener="#{rentCarBean.handleRentCar()}"
-                             action="/views/guest/availableCarDetails?faces-redirect=true" update="@form"/>
-            <p:commandButton value="Cancel" icon="ui-icon-close"
-                             action="/views/guest/availableCarDetails?faces-redirect=true" immediate="true"/>
-        </h:form>
-    </p:outputPanel>
-</h:body>
+                <p:commandButton value="Rent" icon="ui-icon-disk" actionListener="#{rentCarBean.handleRentCar()}"
+                                 action="/Wypozyczalnia-1/views/guest/availableCarList.xhtml?faces-redirect=true"
+                                 update="@form"/>
+                <p:commandButton value="Cancel" icon="ui-icon-close"
+                                 action="/Wypozyczalnia-1/views/guest/availableCarList?faces-redirect=true"
+                                 immediate="true"/>
+            </h:form>
+        </p:outputPanel>
+    </h:body>
+</f:view>
 </html>

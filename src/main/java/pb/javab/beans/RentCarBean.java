@@ -1,6 +1,5 @@
 package pb.javab.beans;
 
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -13,6 +12,8 @@ import pb.javab.services.ICarRentalService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,9 @@ public class RentCarBean implements Serializable {
     private List<Car> availableCars;
     private Car rentCar;
     private CarRental carRental;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
 
 
     @Inject
@@ -64,6 +68,7 @@ public class RentCarBean implements Serializable {
     }
 
     public void setRentCar(Car rentCar) {
+        if (rentCar == null) return;
         this.rentCar = rentCar;
     }
 
@@ -76,12 +81,14 @@ public class RentCarBean implements Serializable {
     }
 
     public void onStartDateSelect(SelectEvent<Date> event) {
-        this.carRental.setRentalStartDate(event.getObject());
+        //var date = Date.from(event.getObject().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        //this.carRental.setRentalStartDate(date);
         updatePrice();
     }
 
     public void onEndDateSelect(SelectEvent<Date> event) {
-        this.carRental.setRentalEndDate(event.getObject());
+        //var date = Date.from(event.getObject().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        //this.carRental.setRentalEndDate(date);
         updatePrice();
     }
 
@@ -95,12 +102,29 @@ public class RentCarBean implements Serializable {
         this.carRental = carRental;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     private void updatePrice() {
         //Both dates must be selected
         if (carRental.getRentalStartDate() == null || carRental.getRentalEndDate() == null) return;
         //Start date must be before End date
         if (carRental.getRentalStartDate().compareTo(carRental.getRentalEndDate()) > 0) return;
-        int days = ((int) (carRental.getRentalStartDate().getTime() - carRental.getRentalEndDate().getTime())) / 1000 / 60 / 60 / 24;
+        //Time between dates, extract days, add one day.
+        int days = ((int) (carRental.getRentalEndDate().getTime() - carRental.getRentalStartDate().getTime())) / 1000 / 60 / 60 / 24 + 1;
         if (rentCar == null) return;
         this.carRental.setPrice(rentCar.getRate().multiply(new BigDecimal(days)));
     }

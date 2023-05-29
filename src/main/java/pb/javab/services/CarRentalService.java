@@ -3,7 +3,6 @@ package pb.javab.services;
 import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
-import pb.javab.daos.ICarDao;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarStatus;

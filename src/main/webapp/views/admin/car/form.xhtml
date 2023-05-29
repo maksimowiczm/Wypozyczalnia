@@ -6,47 +6,49 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui">
-<h:head>
+<f:view>
+    <h:head>
 
-</h:head>
-<h:body>
-    <f:metadata>
-        <o:viewParam name="id" value="#{carBean.car.id}"/>
-    </f:metadata>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <o:viewParam name="id" value="#{carBean.car.id}"/>
+        </f:metadata>
 
-    <p:outputPanel>
-        <h:form>
-            <p:outputLabel value="Model:" for="modelInput"/>
-            <p:inputText value="#{carBean.car.model}" id="modelInput" label="model" required="true"/>
-            <p:message for="modelInput"/>
+        <p:outputPanel>
+            <h:form>
+                <p:outputLabel value="Model:" for="modelInput"/>
+                <p:inputText value="#{carBean.car.model}" id="modelInput" label="model" required="true"/>
+                <p:message for="modelInput"/>
 
-            <p:outputLabel value="Manufacturer:" for="manufacturerInput"/>
-            <p:inputText value="#{carBean.car.manufacturer}" id="manufacturerInput" label="manufacturer"
-                         required="true"/>
-            <p:message for="manufacturerInput"/>
+                <p:outputLabel value="Manufacturer:" for="manufacturerInput"/>
+                <p:inputText value="#{carBean.car.manufacturer}" id="manufacturerInput" label="manufacturer"
+                             required="true"/>
+                <p:message for="manufacturerInput"/>
 
-            <p:outputLabel value="Power:" for="powerInput"/>
-            <p:inputText value="#{carBean.car.power}" id="powerInput" label="power" required="true">
-            </p:inputText>
-            <p:message for="powerInput"/>
+                <p:outputLabel value="Power:" for="powerInput"/>
+                <p:inputText value="#{carBean.car.power}" id="powerInput" label="power" required="true">
+                </p:inputText>
+                <p:message for="powerInput"/>
 
-            <h:outputLabel value="Transmission:" for="transmissionInput"/>
-            <o:importConstants type="pb.javab.models.Transmission"/>
-            <h:selectOneMenu id="transmissionInput" value="#{carBean.car.transmission}">
-                <f:selectItems value="#{Transmission}"/>
-            </h:selectOneMenu>
-            <p:message for="transmissionInput"/>
+                <h:outputLabel value="Transmission:" for="transmissionInput"/>
+                <o:importConstants type="pb.javab.models.Transmission"/>
+                <h:selectOneMenu id="transmissionInput" value="#{carBean.car.transmission}">
+                    <f:selectItems value="#{Transmission}"/>
+                </h:selectOneMenu>
+                <p:message for="transmissionInput"/>
 
-            <p:outputLabel value="Rate:" for="rateInput"/>
-            <p:inputText value="#{carBean.car.rate}" id="rateInput" label="rate" required="true">
-            </p:inputText>
-            <p:message for="rateInput"/>
+                <p:outputLabel value="Rate:" for="rateInput"/>
+                <p:inputText value="#{carBean.car.rate}" id="rateInput" label="rate" required="true">
+                </p:inputText>
+                <p:message for="rateInput"/>
 
-            <p:commandButton value="Save" icon="ui-icon-disk" actionListener="#{carBean.persist}"
-                             action="/views/admin/car/list?faces-redirect=true" update="@form"/>
-            <p:commandButton value="Cancel" icon="ui-icon-close"
-                             action="/views/admin/car/list?faces-redirect=true" immediate="true"/>
-        </h:form>
-    </p:outputPanel>
-</h:body>
+                <p:commandButton value="Save" icon="ui-icon-disk" actionListener="#{carBean.persist}"
+                                 action="/views/admin/car/list?faces-redirect=true" update="@form"/>
+                <p:commandButton value="Cancel" icon="ui-icon-close"
+                                 action="/views/admin/car/list?faces-redirect=true" immediate="true"/>
+            </h:form>
+        </p:outputPanel>
+    </h:body>
+</f:view>
 </html>
