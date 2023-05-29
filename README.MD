@@ -39,17 +39,18 @@ Funkcjonalności
     - anulowanie rezerwacji ❌
 
 ### Testy
-
-- CarBean ❌
-    - persist ✔ Mateusz
-    - delete ✔ Piotrek
-    - getCar ❌
-- Dao ❌
-    - CarDao ❌
-- Servlet ✔ Mateusz
-    - RegisterServlet ✔ Mateusz
-        - handleRegister ✔ Mateusz
-    - LoginServlet ✔ Mateusz
-        - handleLogin ✔ Mateusz
-- UserService ❌
-    - authenticateAndAuthorizeUser ❌
+ - CarBean ❌
+   - persist ✔ Mateusz
+   - delete ✔ Piotrek
+   - getCar ❌
+ - Dao ❌
+   - CarDao ❌
+ - Servlet ✔ Mateusz
+   - RegisterServlet ✔ Mateusz
+     - handleRegister ✔ Mateusz
+   - LoginServlet ✔ Mateusz
+     - handleLogin ✔ Mateusz
+ - UserService ❌
+   - authenticateAndAuthorizeUser ❌
+ - AuthorizationFilter ❌
+   - doFilter 🚧 Mateusz 
