@@ -1,25 +1,52 @@
 package pb.javab.filter;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pb.javab.beans.UserBean;
 import pb.javab.models.Role;
-import pb.javab.utils.RoleAuthentication;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public abstract class AuthorizationFilter implements Filter {
+@WebFilter("*")
+public class AuthorizationFilter implements Filter {
     private final UserBean userBean;
-    private final List<Pattern> allowedEndpoints;
-    private final Role allowedRole;
+    private static final List<Pattern> guestUrls = List.of(
+            Pattern.compile("^/$"),
+            Pattern.compile("^/index"),
+            Pattern.compile("^/login"),
+            Pattern.compile("^/register"));
 
-    public AuthorizationFilter(UserBean userBean, List<Pattern> allowedEndpoints, Role allowedRole) {
+    private static final List<Pattern> userUrls = List.of(
+            Pattern.compile("^/views/user")
+    );
+
+    @Inject
+    public AuthorizationFilter(UserBean userBean) {
         this.userBean = userBean;
-        this.allowedEndpoints = allowedEndpoints;
-        this.allowedRole = allowedRole;
+    }
+
+    private boolean userFilter(String action) {
+        return filter(action, userUrls);
+    }
+
+    private boolean guestFilter(String action) {
+        return filter(action, guestUrls);
+    }
+
+    private boolean filter(String action, List<Pattern> urls) {
+        for (var allowed : urls) {
+            var m = allowed.matcher(action);
+            if (m.find()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -28,37 +55,30 @@ public abstract class AuthorizationFilter implements Filter {
         var res = (HttpServletResponse) response;
         var action = req.getServletPath();
 
-        // jeśli rola wyższa niż wymagana przekaż dalej
         var user = userBean.getUser();
-        if (user != null && RoleAuthentication.authenticate(user.getRole(), allowedRole)) {
+
+        if (user == null) {
+            if (guestFilter(action)) {
+                chain.doFilter(request, response);
+            } else if (userFilter(action)) {
+                // TODO redirect fix
+                res.sendRedirect("/login");
+            } else {
+                res.sendError(404);
+            }
+            return;
+        }
+
+        if (user.getRole() == Role.ADMIN) {
             chain.doFilter(request, response);
             return;
         }
 
-        for (var i : allowedEndpoints) {
-            var m = i.matcher(action);
-            if (m.find()) {
-                // Redirect do loginu, jeśli user może tam wejść
-                if (allowedRole == Role.USER && user == null) {
-                    res.sendRedirect("login");
-                    return;
-                }
-                // Na guest endpointy można wejść bez autoryzacji
-                if (allowedRole == Role.GUEST) {
-                    chain.doFilter(request, response);
-                    return;
-                }
-                // Autoryzacja
-                if (user == null || !RoleAuthentication.authenticate(user.getRole(), allowedRole)) {
-                    res.sendError(404);
-                    return;
-                }
-
-                chain.doFilter(request, response);
-                return;
-            }
+        // Role.User
+        if (userFilter(action)) {
+            chain.doFilter(request, response);
+        } else {
+            res.sendError(404);
         }
-
-        res.sendError(404);
     }
 }

@@ -17,7 +17,7 @@ Funkcjonalności
  - delete ✔ Piotrek
 ### System
  - automatyczne cofanie rezerwacji ❌
- - Uwierzytelnianie 🚧 Mateusz
+ - uwierzytelnianie ✔ Mateusz
 ### Strona klienta ❌
  - rejestracja ❌
    - walidacja emaila ✔ Mateusz
@@ -40,3 +40,5 @@ Funkcjonalności
      - handleLogin ✔ Mateusz
  - UserService ❌
    - authenticateAndAuthorizeUser ❌
+ - AuthorizationFilter ✔ Mateusz
+   - doFilter ✔ Mateusz 
