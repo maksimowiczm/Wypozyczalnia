@@ -23,7 +23,7 @@ Funkcjonalności
    - walidacja emaila ✔ Mateusz
    - haszowanie hasła ❌
  - logowanie ✔ Mateusz
- - przeglądanie ofert wypożyczeń ❌
+ - przeglądanie ofert wypożyczeń 🚧
  - przeglądanie swoich wypożyczeń ❌
  - rezerwacja + anulowanie rezerwacji ❌
 ### Testy

@@ -28,7 +28,19 @@ public class Configuration {
         admin.setPassword("admin");
         userDao.save(admin);
 
+        var user = new User();
+        user.setRole(Role.USER);
+        user.setEmail("user@u.uu");
+        user.setPassword("user");
+        userDao.save(user);
+
         var car = new Car("Matiz", "Daeweoo", 40, CarStatus.AVAILABLE, Transmission.MANUAL, new BigDecimal(100));
+        carDao.save(car);
+
+        var car2 = new Car("emszesc", "Beemwu", 269, CarStatus.AVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
+        carDao.save(car);
+
+        var car3 = new Car("Rdzazda", "Mazda", 100, CarStatus.UNAVILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
         carDao.save(car);
     }
 }

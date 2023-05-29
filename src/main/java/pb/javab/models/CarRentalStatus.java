@@ -1,5 +1,9 @@
 package pb.javab.models;
 
 public enum CarRentalStatus {
-    RESERVATION,
+    NOTPAID,
+    PAID,
+    INPROGRESS,
+    FINISHED,
+    CANCELED,
 }
