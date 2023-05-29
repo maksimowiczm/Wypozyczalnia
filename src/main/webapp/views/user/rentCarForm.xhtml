@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <f:metadata>
+        <o:viewParam name="id" value="#{rentCarBean.rentCar.id}"/>
+    </f:metadata>
+
+    <p:outputPanel>
+        <h:form>
+            <div>id ${rentCarBean.rentCar.id}</div>
+            <div>model ${rentCarBean.rentCar.model}</div>
+            <div>manufacturer ${rentCarBean.rentCar.manufacturer}</div>
+            <div>power ${rentCarBean.rentCar.power}</div>
+            <div>status ${rentCarBean.rentCar.status}</div>
+            <div>transmission ${rentCarBean.rentCar.transmission}</div>
+            <div>rate ${rentCarBean.rentCar.rate}</div>
+
+            <p:outputLabel id="price" value="Price: #{rentCarBean.rentPrice}"/>
+
+            <p:outputLabel value="Start date:" for="startDateInput"/>
+            <p:datePicker id="startDateInput" value="#{rentCarBean.rentStartDate}">
+                <p:ajax event="dateSelect" listener="#{rentCarBean.onStartDateSelect}" update="price"/>
+            </p:datePicker>
+            <p:message for="startDateInput"/>
+
+            <p:outputLabel value="End date:" for="endDateInput"/>
+            <p:datePicker id="endDateInput" value="#{rentCarBean.rentEndDate}">
+                <p:ajax event="dateSelect" listener="#{rentCarBean.onEndDateSelect}" update="price"/>
+            </p:datePicker>
+            <p:message for="endDateInput"/>
+
+            <p:commandButton value="Rent" icon="ui-icon-disk" actionListener="#{rentCarBean.rentCar()}"
+                             action="/views/guest/availableCarDetails?faces-redirect=true" update="@form"/>
+            <p:commandButton value="Cancel" icon="ui-icon-close"
+                             action="/views/guest/availableCarDetails?faces-redirect=true" immediate="true"/>
+        </h:form>
+    </p:outputPanel>
+</h:body>
+</html>

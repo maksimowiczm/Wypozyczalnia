@@ -18,7 +18,7 @@
         </f:metadata>
 
         <a href="availableCarList.xhtml"> <p:button value="back"/></a>
-        <a href=""> <p:button value="rent"/></a>
+        <a href="${'/views/user/rentCarForm.xhtml?id='.concat(rentCarBean.rentCar.id)}"> <p:button value="rent"/></a>
 
         <div>id ${carBean.car.id}</div>
         <div>model ${carBean.car.model}</div>

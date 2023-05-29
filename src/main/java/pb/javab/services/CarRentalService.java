@@ -1,24 +1,35 @@
 package pb.javab.services;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Schedule;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import pb.javab.daos.CarDao;
 import pb.javab.daos.CarRentalDao;
+import pb.javab.models.Car;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarStatus;
+import pb.javab.models.User;
 
 @Singleton
 public class CarRentalService implements ICarRentalService {
-    private final CarRentalDao carRentalDao;
-
     @Inject
-    public CarRentalService(CarRentalDao carRentalDao) {
-        this.carRentalDao = carRentalDao;
+    private CarRentalDao carRentalDao;
+    @Inject
+    private CarDao carDao;
+
+    public CarRentalService() {
     }
 
     @Override
-    public boolean rent(CarRental carRental) {
-        return false;
+    public boolean rent(Car car, User user) {
+        var carRental = new CarRental();
+        carRental.setCar(car);
+        carRental.setUser(user);
+        carRentalDao.save(carRental);
+        car.setStatus(CarStatus.UNAVAILABLE);
+        carDao.update(car);
+        return true;
     }
 
     @Override
