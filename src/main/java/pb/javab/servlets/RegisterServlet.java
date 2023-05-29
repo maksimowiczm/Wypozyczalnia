@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pb.javab.beans.UserBean;
-import pb.javab.beans.UserService;
+import pb.javab.services.UserService;
 import pb.javab.models.User;
 import pb.javab.utils.AuthorizationResult;
 import pb.javab.utils.UserLoginValidator;
