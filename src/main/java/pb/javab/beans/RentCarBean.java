@@ -8,7 +8,6 @@ import org.primefaces.event.SelectEvent;
 import pb.javab.daos.ICarDao;
 import pb.javab.models.Car;
 import pb.javab.models.CarStatus;
-import pb.javab.services.CarRentalService;
 import pb.javab.services.ICarRentalService;
 
 import java.io.Serializable;
@@ -35,7 +34,7 @@ public class RentCarBean implements Serializable {
 
 
     @Inject
-    public RentCarBean(ICarDao carDao, UserBean userBean, CarRentalService carRentalService) {
+    public RentCarBean(ICarDao carDao, UserBean userBean, ICarRentalService carRentalService) {
         this.carDao = carDao;
         this.userBean = userBean;
         this.carRentalService = carRentalService;

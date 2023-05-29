@@ -1,11 +1,10 @@
 package pb.javab.services;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Schedule;
+import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
-import pb.javab.daos.CarDao;
-import pb.javab.daos.CarRentalDao;
+import pb.javab.daos.ICarDao;
+import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.Car;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarStatus;
@@ -14,12 +13,9 @@ import pb.javab.models.User;
 @Singleton
 public class CarRentalService implements ICarRentalService {
     @Inject
-    private CarRentalDao carRentalDao;
+    private ICarRentalDao carRentalDao;
     @Inject
-    private CarDao carDao;
-
-    public CarRentalService() {
-    }
+    private ICarDao carDao;
 
     @Override
     public boolean rent(Car car, User user) {
