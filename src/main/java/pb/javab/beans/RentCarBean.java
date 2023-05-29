@@ -7,6 +7,7 @@ import jakarta.inject.Named;
 import org.primefaces.event.SelectEvent;
 import pb.javab.daos.ICarDao;
 import pb.javab.models.Car;
+import pb.javab.models.CarRental;
 import pb.javab.models.CarStatus;
 import pb.javab.services.ICarRentalService;
 
@@ -28,9 +29,7 @@ public class RentCarBean implements Serializable {
     private final ICarRentalService carRentalService;
     private List<Car> availableCars;
     private Car rentCar;
-    private Date rentStartDate;
-    private Date rentEndDate;
-    private BigDecimal rentPrice;
+    private CarRental carRental;
 
 
     @Inject
@@ -68,56 +67,51 @@ public class RentCarBean implements Serializable {
         this.rentCar = rentCar;
     }
 
-    public void rentCar() {
-        if (rentCar == null) return;
-        var user = userBean.getUser();
-        if (user == null) return;
-        carRentalService.rent(rentCar, user);
+    public void handleRentCar() {
+        if (!validateRent()) return;
+        if (carRentalService.rent(carRental)) {
+            rentCar.setStatus(CarStatus.UNAVAILABLE);
+            carDao.update(rentCar);
+        }
     }
 
     public void onStartDateSelect(SelectEvent<Date> event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        this.rentStartDate = event.getObject();
+        this.carRental.setRentalStartDate(event.getObject());
         updatePrice();
     }
 
     public void onEndDateSelect(SelectEvent<Date> event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        this.rentEndDate = event.getObject();
+        this.carRental.setRentalEndDate(event.getObject());
         updatePrice();
     }
 
-    public Date getRentStartDate() {
-        return rentStartDate;
+    public CarRental getCarRental() {
+        if (carRental == null)
+            carRental = new CarRental();
+        return carRental;
     }
 
-    public void setRentStartDate(Date rentStartDate) {
-        this.rentStartDate = rentStartDate;
-    }
-
-    public Date getRentEndDate() {
-        return rentEndDate;
-    }
-
-    public void setRentEndDate(Date rentEndDate) {
-        this.rentEndDate = rentEndDate;
-    }
-
-    public BigDecimal getRentPrice() {
-        return rentPrice;
-    }
-
-    public void setRentPrice(BigDecimal rentPrice) {
-        this.rentPrice = rentPrice;
+    public void setCarRental(CarRental carRental) {
+        this.carRental = carRental;
     }
 
     private void updatePrice() {
         //Both dates must be selected
-        if (rentStartDate == null || rentEndDate == null) return;
+        if (carRental.getRentalStartDate() == null || carRental.getRentalEndDate() == null) return;
         //Start date must be before End date
-        if (rentStartDate.compareTo(rentEndDate) > 0) return;
-        int days = ((int) (rentStartDate.getTime() - rentEndDate.getTime())) / 1000 / 60 / 60 / 24;
+        if (carRental.getRentalStartDate().compareTo(carRental.getRentalEndDate()) > 0) return;
+        int days = ((int) (carRental.getRentalStartDate().getTime() - carRental.getRentalEndDate().getTime())) / 1000 / 60 / 60 / 24;
         if (rentCar == null) return;
-        this.rentPrice = rentCar.getRate().multiply(new BigDecimal(days));
+        this.carRental.setPrice(rentCar.getRate().multiply(new BigDecimal(days)));
+    }
+
+    private Boolean validateRent() {
+        // If car or carRental or user does not exist
+        if (rentCar == null || carRental == null || userBean.getUser() == null) return false;
+        // If start date after end date
+        if (carRental.getRentalStartDate().compareTo(carRental.getRentalEndDate()) > 0) return false;
+        // If price null or lower/equal 0
+        if (carRental.getPrice() == null || carRental.getPrice().compareTo(new BigDecimal(0)) < 1) return false;
+        return true;
     }
 }

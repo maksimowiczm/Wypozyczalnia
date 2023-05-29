@@ -5,26 +5,17 @@ import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
 import pb.javab.daos.ICarDao;
 import pb.javab.daos.ICarRentalDao;
-import pb.javab.models.Car;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarStatus;
-import pb.javab.models.User;
 
 @Singleton
 public class CarRentalService implements ICarRentalService {
     @Inject
     private ICarRentalDao carRentalDao;
-    @Inject
-    private ICarDao carDao;
 
     @Override
-    public boolean rent(Car car, User user) {
-        var carRental = new CarRental();
-        carRental.setCar(car);
-        carRental.setUser(user);
+    public boolean rent(CarRental carRental) {
         carRentalDao.save(carRental);
-        car.setStatus(CarStatus.UNAVAILABLE);
-        carDao.update(car);
         return true;
     }
 
