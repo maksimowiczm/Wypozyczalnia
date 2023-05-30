@@ -10,14 +10,17 @@ Funkcjonalności
 - Uwierzytelnianie.
 
 # TODO
-### Car CRUD ✔
- - create ✔ Mateusz
- - read ✔ Mateusz
- - update ✔ Mateusz
- - delete ✔ Piotrek
-### System
+### System ❌
  - automatyczne cofanie rezerwacji ❌
  - uwierzytelnianie ✔ Mateusz
+ - wysyłanie emaila ❌
+### Strona admina ❌
+ - Car CRUD ✔ Mateusz/Piotrek
+   - create ✔ Mateusz
+   - read ✔ Mateusz
+   - update ✔ Mateusz
+   - delete ✔ Piotrek
+ - przeglądanie wszystkich wypożyczeń ❌
 ### Strona klienta ❌
  - rejestracja ❌
    - walidacja emaila ✔ Mateusz
@@ -26,7 +29,7 @@ Funkcjonalności
  - przeglądanie ofert wypożyczeń ❌
  - przeglądanie swoich wypożyczeń ❌
  - rezerwacja + anulowanie rezerwacji ❌
-### Testy
+### Testy ❌
  - CarBean ❌
    - persist ✔ Mateusz
    - delete ✔ Piotrek
