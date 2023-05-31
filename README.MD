@@ -11,7 +11,7 @@ Funkcjonalności
 
 # TODO
 ### System ❌
- - automatyczne cofanie rezerwacji 🚧 Mateusz
+ - automatyczne cofanie rezerwacji ✔ Mateusz
  - uwierzytelnianie ✔ Mateusz
  - wysyłanie emaila ❌
 ### Strona admina ❌
