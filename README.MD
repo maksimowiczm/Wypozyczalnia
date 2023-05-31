@@ -11,7 +11,7 @@ Funkcjonalności
 
 # TODO
 ### System ❌
- - automatyczne cofanie rezerwacji ❌
+ - automatyczne cofanie rezerwacji 🚧 Mateusz
  - uwierzytelnianie ✔ Mateusz
  - wysyłanie emaila ❌
 ### Strona admina ❌
@@ -26,8 +26,8 @@ Funkcjonalności
    - walidacja emaila ✔ Mateusz
    - haszowanie hasła ❌
  - logowanie ✔ Mateusz
- - przeglądanie ofert wypożyczeń ❌
- - przeglądanie swoich wypożyczeń ❌
+ - przeglądanie ofert wypożyczeń ✔ Piotrek
+ - przeglądanie swoich wypożyczeń ✔ Piotrek
  - rezerwacja + anulowanie rezerwacji ❌
 ### Testy ❌
  - CarBean ❌

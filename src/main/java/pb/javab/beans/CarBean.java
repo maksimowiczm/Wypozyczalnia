@@ -39,7 +39,6 @@ public class CarBean implements Serializable {
         if (car == null)
             car = new Car();
 
-        // xddddddddddd
         var id = car.getId();
         if (id != null) {
             if (car.getModel() == null)

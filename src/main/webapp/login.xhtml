@@ -7,31 +7,33 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
-<h:body>
-    <h2>Please login here</h2>
+<f:view>
+    <h:body>
+        <h2>Please login here</h2>
 
-    <p:outputPanel>
-        <form method="post" action="login">
-            <div>
-                <p:outputLabel for="email">Email:</p:outputLabel>
-                <p:inputText type="text" id="email" name="email"/>
-            </div>
-            <div>
-                <p:outputLabel for="password">Password:</p:outputLabel>
-                <p:inputText type="password" id="password" name="password"/>
-            </div>
+        <p:outputPanel>
+            <form method="post" action="login">
+                <div>
+                    <p:outputLabel for="email">Email:</p:outputLabel>
+                    <p:inputText type="text" id="email" name="email"/>
+                </div>
+                <div>
+                    <p:outputLabel for="password">Password:</p:outputLabel>
+                    <p:inputText type="password" id="password" name="password"/>
+                </div>
 
-            <p:commandButton value="Login"/>
-        </form>
-        <c:if test="${param.error}">
-            Invalid Email or password.
-        </c:if>
-        <c:if test="${param.bad_email}">
-            Invalid Email.
-        </c:if>
-        <c:if test="${param.bad_password}">
-            Invalid password.
-        </c:if>
-    </p:outputPanel>
-</h:body>
+                <p:commandButton value="Login"/>
+            </form>
+            <c:if test="${param.error}">
+                Invalid Email or password.
+            </c:if>
+            <c:if test="${param.bad_email}">
+                Invalid Email.
+            </c:if>
+            <c:if test="${param.bad_password}">
+                Invalid password.
+            </c:if>
+        </p:outputPanel>
+    </h:body>
+</f:view>
 </html>
