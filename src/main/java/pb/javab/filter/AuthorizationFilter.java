@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-//TODO:Move all views to /views folder
 @WebFilter("/views/*")
 public class AuthorizationFilter implements Filter {
     private final UserBean userBean;
