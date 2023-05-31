@@ -10,6 +10,7 @@ import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,18 +68,29 @@ public class CarRentalService implements ICarRentalService {
         return carRentalToBePayed.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
     }
 
-    protected void cancelAllCarRentalsThatAreNotPaidAndOlderThan(Date date) {
+    /**
+     * Deletes car rentals that are older than given date
+     *
+     * @return deleted car rentals
+     */
+    protected List<CarRental> cancelAllCarRentalsThatAreNotPaidAndOlderThan(Date date) {
+        var deletedCarRentals = new ArrayList<CarRental>();
         var notPaid = carRentalToBePayed.stream().filter(c -> c.getStatus() == CarRentalStatus.PAID && c.getCreatedAt().before(date)).collect(Collectors.toList());
 
         for (var rental : notPaid) {
             carRentalDao.delete(rental);
             carRentalToBePayed.remove(rental);
+            deletedCarRentals.add(rental);
         }
+
+        return deletedCarRentals;
     }
 
-    // TODO
-    @Schedule(hour = "*/3", minute = "*", second = "*", persistent = false)
+    @Schedule(hour = "*", minute = "*/30", second = "*", persistent = false)
     private void cancelNotPayedReservations() {
+        var calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, -3);
+        var toBeEmailed = cancelAllCarRentalsThatAreNotPaidAndOlderThan(calendar.getTime());
         // TODO wysylanie maila
     }
 }
