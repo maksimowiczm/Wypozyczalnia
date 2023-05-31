@@ -2,10 +2,17 @@ package pb.javab.services;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import pb.javab.daos.CarRentalDao;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 
+import javax.swing.plaf.SpinnerUI;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -72,5 +79,26 @@ class CarRentalServiceTest {
         var result = carRentalService.cancel(1L);
 
         assert !result;
+    }
+
+    @Test
+    public void cancelAllCarRentalsThatAreNotPaidAndOlderThan_daoWithCarRentalsThatShouldBeDeleted_deleteCarRentals() {
+        // arrange
+        var rental = new CarRental();
+        rental.setId(1L);
+        rental.setStatus(CarRentalStatus.PAID);
+        var calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, -1);
+        rental.setCreatedAt(calendar.getTime());
+
+        when(carRentalDao.getByStatus(CarRentalStatus.PAID)).thenReturn(List.of(rental));
+        when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(new CarRental()));
+        carRentalService.init(carRentalDao);
+
+        // act
+        carRentalService.cancelAllCarRentalsThatAreNotPaidAndOlderThan(new Date());
+
+        // assert
+        verify(carRentalDao).delete(rental);
     }
 }

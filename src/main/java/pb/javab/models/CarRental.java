@@ -15,6 +15,11 @@ public class CarRental extends BaseModel {
     private Car car;
     @ManyToOne
     private User user;
+    private Date createdAt;
+    private Date rentalStartDate;
+    private Date rentalEndDate;
+    private BigDecimal price;
+    private CarRentalStatus status;
 
     @PrePersist
     public void prePersist() {
@@ -76,10 +81,4 @@ public class CarRental extends BaseModel {
     public void setStatus(CarRentalStatus status) {
         this.status = status;
     }
-
-    private Date createdAt;
-    private Date rentalStartDate;
-    private Date rentalEndDate;
-    private BigDecimal price;
-    private CarRentalStatus status;
 }

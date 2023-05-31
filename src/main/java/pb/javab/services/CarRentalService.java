@@ -5,13 +5,14 @@ import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
-import pb.javab.daos.CarRentalDao;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
 @Startup
@@ -64,6 +65,15 @@ public class CarRentalService implements ICarRentalService {
 
     private CarRental getCarRentalFromList(Long id) {
         return carRentalToBePayed.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
+    }
+
+    protected void cancelAllCarRentalsThatAreNotPaidAndOlderThan(Date date) {
+        var notPaid = carRentalToBePayed.stream().filter(c -> c.getStatus() == CarRentalStatus.PAID && c.getCreatedAt().before(date)).collect(Collectors.toList());
+
+        for (var rental : notPaid) {
+            carRentalDao.delete(rental);
+            carRentalToBePayed.remove(rental);
+        }
     }
 
     // TODO

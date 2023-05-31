@@ -45,5 +45,7 @@ Funkcjonalności
    - authenticateAndAuthorizeUser ❌
  - AuthorizationFilter ✔ Mateusz
    - doFilter ✔ Mateusz 
- - CarRentalServiceTest ❌
+ - CarRentalServiceTest ✔
    - pay ✔
+   - cancel ✔
+   - cancelAllCarRentalsThatAreNotPaidAndOlderThan ✔
