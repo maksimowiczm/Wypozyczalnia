@@ -11,7 +11,7 @@ Funkcjonalności
 
 # TODO
 ### System ❌
- - automatyczne cofanie rezerwacji 🚧 Mateusz
+ - automatyczne cofanie rezerwacji ✔ Mateusz
  - uwierzytelnianie ✔ Mateusz
  - wysyłanie emaila ❌
 ### Strona admina ❌
@@ -45,3 +45,7 @@ Funkcjonalności
    - authenticateAndAuthorizeUser ❌
  - AuthorizationFilter ✔ Mateusz
    - doFilter ✔ Mateusz 
+ - CarRentalServiceTest ✔
+   - pay ✔
+   - cancel ✔
+   - cancelAllCarRentalsThatAreNotPaidAndOlderThan ✔
