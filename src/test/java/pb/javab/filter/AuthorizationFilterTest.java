@@ -64,7 +64,7 @@ class AuthorizationFilterTest {
 
         new AuthorizationFilter(userBean).doFilter(request, response, chain);
 
-        verify(response, times(1)).sendRedirect("/login");
+        verify(response, times(1)).sendRedirect("/Wypozyczalnia-1/login");
     }
 
     @Test
