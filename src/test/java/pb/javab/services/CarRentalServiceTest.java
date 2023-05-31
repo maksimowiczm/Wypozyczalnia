@@ -21,7 +21,7 @@ class CarRentalServiceTest {
     }
 
     @Test
-    public void pay_validCarRentalId_shouldCallCarRentalDaoWithUpdatedCarRentalStatus() {
+    public void pay_validCarRentalId_shouldCallCarRentalDaoWithUpdatedCarRentalStatusAndReturnTrue() {
         // arrange
         var rental = new CarRental();
         rental.setId(1L);
@@ -43,6 +43,33 @@ class CarRentalServiceTest {
         carRentalService.init(carRentalDao);
 
         var result = carRentalService.pay(1L);
+
+        assert !result;
+    }
+
+    @Test
+    public void cancel_validCarRentalId_shouldCallCarRentalDaoWithUpdatedCarRentalStatusAndReturnTrue() {
+        // arrange
+        var rental = new CarRental();
+        rental.setId(1L);
+        rental.setStatus(CarRentalStatus.PAID);
+        when(carRentalDao.getByStatus(CarRentalStatus.PAID)).thenReturn(List.of(rental));
+        carRentalService.init(carRentalDao);
+
+        // act
+        var result = carRentalService.cancel(1L);
+
+        // assert
+        assert result;
+        verify(carRentalDao).update(rental);
+        assert rental.getStatus() == CarRentalStatus.CANCELED;
+    }
+
+    @Test
+    public void cancel_invalidCarRentalId_shouldReturnFalse() {
+        carRentalService.init(carRentalDao);
+
+        var result = carRentalService.cancel(1L);
 
         assert !result;
     }

@@ -5,6 +5,7 @@ import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
+import pb.javab.daos.CarRentalDao;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
@@ -25,6 +26,7 @@ public class CarRentalService implements ICarRentalService {
         this.carRentalDao = carRentalDao;
         // get unpaid cars from db at startup
         carRentalToBePayed = new ArrayList<>(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID));
+        carRentalToBePayed.addAll(carRentalDao.getByStatus(CarRentalStatus.PAID));
     }
 
     @Override
