@@ -6,7 +6,7 @@ import pb.javab.models.CarStatus;
 public interface ICarRentalService {
     boolean rent(CarRental carRental);
 
-    boolean pay(CarRental carRental);
+    boolean pay(Long id);
 
-    boolean cancel(CarRental carRental);
+    boolean cancel(Long id);
 }

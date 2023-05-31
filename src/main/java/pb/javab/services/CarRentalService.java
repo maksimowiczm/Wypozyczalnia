@@ -9,6 +9,7 @@ import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -23,7 +24,7 @@ public class CarRentalService implements ICarRentalService {
     public void init(ICarRentalDao carRentalDao) {
         this.carRentalDao = carRentalDao;
         // get unpaid cars from db at startup
-        carRentalToBePayed = carRentalDao.getByStatus(CarRentalStatus.NOT_PAID);
+        carRentalToBePayed = new ArrayList<>(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID));
     }
 
     @Override
@@ -34,33 +35,33 @@ public class CarRentalService implements ICarRentalService {
     }
 
     @Override
-    public boolean pay(CarRental carRental) {
-        var rental = getCarRentalFromList(carRental);
+    public boolean pay(Long id) {
+        var rental = getCarRentalFromList(id);
         if (rental == null)
             return false;
 
-        carRental.setStatus(CarRentalStatus.PAID);
-        carRentalDao.update(carRental);
+        rental.setStatus(CarRentalStatus.PAID);
+        carRentalDao.update(rental);
 
         carRentalToBePayed.remove(rental);
         return true;
-    }
-
-    private CarRental getCarRentalFromList(CarRental carRental) {
-        return carRentalToBePayed.stream().filter(c -> c.getId().equals(carRental.getId())).findAny().orElse(null);
     }
 
     @Override
-    public boolean cancel(CarRental carRental) {
-        var rental = getCarRentalFromList(carRental);
+    public boolean cancel(Long id) {
+        var rental = getCarRentalFromList(id);
         if (rental == null)
             return false;
 
-        carRental.setStatus(CarRentalStatus.CANCELED);
-        carRentalDao.update(carRental);
+        rental.setStatus(CarRentalStatus.CANCELED);
+        carRentalDao.update(rental);
 
         carRentalToBePayed.remove(rental);
         return true;
+    }
+
+    private CarRental getCarRentalFromList(Long id) {
+        return carRentalToBePayed.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
     }
 
     // TODO
