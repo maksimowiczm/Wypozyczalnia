@@ -60,7 +60,6 @@ public class AuthorizationFilter implements Filter {
         var res = (HttpServletResponse) response;
         var action = req.getServletPath();
 
-        // jeśli rola wyższa niż wymagana przekaż dalej
         var user = userBean.getUser();
 
         if (user == null) {
@@ -76,12 +75,14 @@ public class AuthorizationFilter implements Filter {
 
         if (user.getRole() == Role.ADMIN) {
             chain.doFilter(request, response);
-        } else if (user.getRole() == Role.USER) {
-            if (userFilter(action)) {
-                chain.doFilter(request, response);
-            } else {
-                res.sendError(404);
-            }
+            return;
+        }
+
+        // Role.User
+        if (userFilter(action)) {
+            chain.doFilter(request, response);
+        } else {
+            res.sendError(404);
         }
     }
 }

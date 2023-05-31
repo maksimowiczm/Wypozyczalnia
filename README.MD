@@ -5,40 +5,31 @@ Funkcjonalności
 - Przeglądanie/dodawanie/edycja/usuwanie pojazdów.
 - Możliwość składania rezerwacji
 - Możliwość przeglądania rezerwacji (wypożyczony (przez kogo), dostępny, zarezerwowany).
-- Automatyczne cofanie rezerwacji (z powiadomieniem przez e-mail) w przypadku braku potwierdzenia otrzymania płatności
-  do trzech godzin po złożeniu rezerwacji.
+- Automatyczne cofanie rezerwacji (z powiadomieniem przez e-mail) w przypadku braku potwierdzenia otrzymania płatności do trzech godzin po złożeniu rezerwacji.
 - Przesyłanie wiadomości o złożonej rezerwacji/potwierdzeniu otrzymania płatności/anulowaniu rezerwacji.
 - Uwierzytelnianie.
 
 # TODO
-
-### Car CRUD ✔
-
-- create ✔ Mateusz
-- read ✔ Mateusz
-- update ✔ Mateusz
-- delete ✔ Piotrek
-
-### System
-
-- automatyczne cofanie rezerwacji 🚧 Mateusz
-- Uwierzytelnianie 🚧 Mateusz
-
+### System ❌
+ - automatyczne cofanie rezerwacji ❌
+ - uwierzytelnianie ✔ Mateusz
+ - wysyłanie emaila ❌
+### Strona admina ❌
+ - Car CRUD ✔ Mateusz/Piotrek
+   - create ✔ Mateusz
+   - read ✔ Mateusz
+   - update ✔ Mateusz
+   - delete ✔ Piotrek
+ - przeglądanie wszystkich wypożyczeń ❌
 ### Strona klienta ❌
-
-- rejestracja ❌
-    - walidacja emaila ✔ Mateusz
-    - haszowanie hasła ❌
-- logowanie ✔ Mateusz
-- wypożyczenia
-    - przeglądanie ofert wypożyczeń ✔ Piotrek
-    - szczegóły ofert wypożyczeń ✔ Piotrek
-    - przeglądanie swoich wypożyczeń ❌
-    - rezerwacja ❌
-    - opłata ❌
-    - anulowanie rezerwacji ❌
-
-### Testy
+ - rejestracja ❌
+   - walidacja emaila ✔ Mateusz
+   - haszowanie hasła ❌
+ - logowanie ✔ Mateusz
+ - przeglądanie ofert wypożyczeń ❌
+ - przeglądanie swoich wypożyczeń ❌
+ - rezerwacja + anulowanie rezerwacji ❌
+### Testy ❌
  - CarBean ❌
    - persist ✔ Mateusz
    - delete ✔ Piotrek
@@ -52,5 +43,5 @@ Funkcjonalności
      - handleLogin ✔ Mateusz
  - UserService ❌
    - authenticateAndAuthorizeUser ❌
- - AuthorizationFilter ❌
-   - doFilter 🚧 Mateusz 
+ - AuthorizationFilter ✔ Mateusz
+   - doFilter ✔ Mateusz 
