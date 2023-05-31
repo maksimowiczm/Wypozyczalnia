@@ -8,5 +8,5 @@ public interface ICarRentalService {
 
     boolean pay(CarRental carRental);
 
-    boolean cancel(CarStatus carRental);
+    boolean cancel(CarRental carRental);
 }

@@ -3,6 +3,7 @@ import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
 import pb.javab.daos.ICarDao;
+import pb.javab.daos.ICarRentalDao;
 import pb.javab.daos.IUserDao;
 import pb.javab.models.*;
 
@@ -15,6 +16,9 @@ public class Configuration {
     private IUserDao userDao;
     @Inject
     private ICarDao carDao;
+
+    @Inject
+    private ICarRentalDao carRentalDao;
 
     @PostConstruct
     public void init() {
