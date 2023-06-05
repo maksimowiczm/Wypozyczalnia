@@ -50,15 +50,15 @@ public class MyCarRentalBean implements Serializable {
             carRental = new CarRental();
 
         var id = carRental.getId();
-        if (id == null) {
+        if (id == null && viewParamUuidString != null) {
             try {
                 id = UUID.fromString(viewParamUuidString);
             } catch (IllegalArgumentException ignored) {
                 return carRental;
             }
+            if (carRental.getUser() == null)
+                carRental = carRentalDao.get(id).orElseThrow();
         }
-        if (carRental.getUser() == null)
-            carRental = carRentalDao.get(id).orElseThrow();
         return carRental;
     }
 
@@ -75,6 +75,9 @@ public class MyCarRentalBean implements Serializable {
     }
 
     public void makePayment() {
-        carRentalService.pay(this.getCarRental().getId());
+        if (carRentalService.pay(this.getCarRental().getId())) {
+            this.carRental = carRentalDao.get(this.carRental.getId()).orElseThrow();
+        }
+        //TODO:Make page refresh
     }
 }

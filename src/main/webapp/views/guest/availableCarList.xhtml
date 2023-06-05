@@ -10,6 +10,9 @@
 <f:view>
     <h:head></h:head>
     <h:body>
+        <c:if test="#{rentCarBean.availableCars.size()==0}">
+            No available cars to rent.
+        </c:if>
         <c:forEach items='#{rentCarBean.availableCars}' var='car'>
             <div>${car.id}</div>
             <div>${car.model}</div>

@@ -37,7 +37,7 @@ Funkcjonalności
 - przeglądanie swoich wypożyczeń ✔ Piotrek
 - przeglądanie szczegółów wypożyczenia ✔ Piotrek
 - rezerwacja ✔ Piotrek
-- opłata rezerwacji 🚧 Piotrek
+- opłata rezerwacji ✔ Piotrek (TODO: refresh strony)
 - anulowanie rezerwacji ❌
 
 ### Testy ❌

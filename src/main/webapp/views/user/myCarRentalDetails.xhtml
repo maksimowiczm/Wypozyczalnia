@@ -30,12 +30,13 @@
                 <div>Price: ${myCarRentalBean.carRental.price}</div>
                 <div>From: ${myCarRentalBean.carRental.startDateString}</div>
                 <div>To: ${myCarRentalBean.carRental.endDateString}</div>
-                <div>Status: ${myCarRentalBean.carRental.status}</div>
+                <p:outputLabel> ${myCarRentalBean.carRental.status} </p:outputLabel>
             </div>
             <div>
-                <a href="availableCarList.xhtml"> <p:button value="back"/></a>
+                <a href="myCarRentalList.xhtml"> <p:button value="back"/></a>
                 <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
-                    <p:commandButton value="Make payment" action="#{myCarRentalBean.makePayment()}" update="@form"/>
+                    <p:commandButton value="Make payment" action="#{myCarRentalBean.makePayment()}" immediate="true"
+                                     process="@form"/>
                 </c:if>
             </div>
         </h:form>
