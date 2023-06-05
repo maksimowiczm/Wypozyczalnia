@@ -1,9 +1,6 @@
 package pb.javab.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,9 +8,9 @@ import java.util.Date;
 @Entity
 @Table(name = "carRental")
 public class CarRental extends BaseModel {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Car car;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     private Date createdAt;
     private Date rentalStartDate;

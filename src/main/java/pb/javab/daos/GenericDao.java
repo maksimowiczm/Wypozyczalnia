@@ -18,7 +18,7 @@ public abstract class GenericDao<T> implements IGenericDao<T> {
 
     @Override
     public void save(T t) {
-        em.persist(t);
+        em.persist(em.contains(t) ? t : em.merge(t));
     }
 
     @Override
