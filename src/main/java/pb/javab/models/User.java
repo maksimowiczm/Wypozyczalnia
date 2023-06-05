@@ -52,4 +52,12 @@ public class User extends BaseModel {
     public void setCarRentals(List<CarRental> carRentals) {
         this.carRentals = carRentals;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        var user = (User) o;
+        return user.getEmail().equals(this.email) && user.getRole().equals(this.role);
+    }
 }

@@ -35,7 +35,9 @@ Funkcjonalności
 - logowanie ✔ Mateusz
 - przeglądanie ofert wypożyczeń ✔ Piotrek
 - przeglądanie swoich wypożyczeń ✔ Piotrek
-- rezerwacja 🚧 Piotrek
+- przeglądanie szczegółów wypożyczenia ✔ Piotrek
+- rezerwacja ✔ Piotrek
+- opłata rezerwacji 🚧 Piotrek
 - anulowanie rezerwacji ❌
 
 ### Testy ❌

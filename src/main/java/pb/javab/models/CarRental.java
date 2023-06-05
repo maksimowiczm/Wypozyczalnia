@@ -3,6 +3,8 @@ package pb.javab.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -77,5 +79,17 @@ public class CarRental extends BaseModel {
 
     public void setStatus(CarRentalStatus status) {
         this.status = status;
+    }
+
+    public String getStartDateString() {
+        var pattern = "dd/MM/yyyy";
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(this.rentalStartDate);
+    }
+
+    public String getEndDateString() {
+        var pattern = "dd/MM/yyyy";
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(this.rentalStartDate);
     }
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<f:view>
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:metadata>
+                <o:viewParam name="id" value="#{myCarRentalBean.carRental.id}"/>
+            </f:metadata>
+            <div>
+                Car details:
+                <div>Model: ${myCarRentalBean.carRental.car.model}</div>
+                <div>Manufacturer: ${myCarRentalBean.carRental.car.manufacturer}</div>
+                <div>Power: ${myCarRentalBean.carRental.car.power}</div>
+                <div>Transmission: ${myCarRentalBean.carRental.car.transmission}</div>
+                <div>Rate: ${myCarRentalBean.carRental.car.rate}</div>
+            </div>
+            <div>
+                Rental details:
+                <div>Price: ${myCarRentalBean.carRental.price}</div>
+                <div>From: ${myCarRentalBean.carRental.startDateString}</div>
+                <div>To: ${myCarRentalBean.carRental.endDateString}</div>
+                <div>Status: ${myCarRentalBean.carRental.status}</div>
+            </div>
+            <div>
+                <a href="availableCarList.xhtml"> <p:button value="back"/></a>
+                <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
+                    <p:commandButton value="Make payment" action="#{myCarRentalBean.makePayment()}" update="@form"/>
+                </c:if>
+            </div>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

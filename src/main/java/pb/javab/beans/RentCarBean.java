@@ -13,7 +13,6 @@ import pb.javab.services.ICarRentalService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,9 +30,7 @@ public class RentCarBean implements Serializable {
     private List<Car> availableCars;
     private Car rentCar;
     private CarRental carRental;
-
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final Date today = new Date();
 
 
     @Inject
@@ -101,20 +98,8 @@ public class RentCarBean implements Serializable {
         this.carRental = carRental;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public Date getToday() {
+        return today;
     }
 
     private void updatePrice() {
@@ -139,4 +124,5 @@ public class RentCarBean implements Serializable {
         if (rentCar.getStatus() != CarStatus.AVAILABLE) return false;
         return true;
     }
+
 }
