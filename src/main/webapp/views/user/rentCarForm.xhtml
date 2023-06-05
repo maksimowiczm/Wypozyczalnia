@@ -38,16 +38,17 @@
                 <p:message for="startDateInput"/>
 
                 <p:outputLabel value="End date:" for="endDateInput"/>
-                <p:datePicker id="endDateInput" value="#{rentCarBean.carRental.rentalEndDate}" required="true">
+                <p:datePicker id="endDateInput" value="#{rentCarBean.carRental.rentalEndDate}" required="true"
+                              mindate="#{rentCarBean.carRental.rentalStartDate}">
                     <p:ajax event="dateSelect" listener="#{rentCarBean.onEndDateSelect}" update="price"/>
                 </p:datePicker>
                 <p:message for="endDateInput"/>
 
                 <p:commandButton value="Rent" icon="ui-icon-disk" actionListener="#{rentCarBean.handleRentCar()}"
-                                 action="/Wypozyczalnia-1/views/guest/availableCarList.xhtml?faces-redirect=true"
+                                 action="/views/guest/availableCarList.xhtml?faces-redirect=true"
                                  update="@form"/>
                 <p:commandButton value="Cancel" icon="ui-icon-close"
-                                 action="/Wypozyczalnia-1/views/guest/availableCarList?faces-redirect=true"
+                                 action="/views/guest/availableCarList?faces-redirect=true"
                                  immediate="true"/>
             </h:form>
         </p:outputPanel>

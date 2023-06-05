@@ -7,13 +7,13 @@ import org.primefaces.event.SelectEvent;
 import pb.javab.daos.ICarDao;
 import pb.javab.models.Car;
 import pb.javab.models.CarRental;
+import pb.javab.models.CarRentalStatus;
 import pb.javab.models.CarStatus;
 import pb.javab.services.ICarRentalService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,6 +73,9 @@ public class RentCarBean implements Serializable {
     }
 
     public void handleRentCar() {
+        carRental.setCar(rentCar);
+        carRental.setUser(userBean.getUser());
+        carRental.setStatus(CarRentalStatus.NOT_PAID);
         if (!validateRent()) return;
         if (carRentalService.rent(carRental)) {
             rentCar.setStatus(CarStatus.UNAVAILABLE);
@@ -81,14 +84,10 @@ public class RentCarBean implements Serializable {
     }
 
     public void onStartDateSelect(SelectEvent<Date> event) {
-        //var date = Date.from(event.getObject().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        //this.carRental.setRentalStartDate(date);
         updatePrice();
     }
 
     public void onEndDateSelect(SelectEvent<Date> event) {
-        //var date = Date.from(event.getObject().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        //this.carRental.setRentalEndDate(date);
         updatePrice();
     }
 
@@ -136,6 +135,8 @@ public class RentCarBean implements Serializable {
         if (carRental.getRentalStartDate().compareTo(carRental.getRentalEndDate()) > 0) return false;
         // If price null or lower/equal 0
         if (carRental.getPrice() == null || carRental.getPrice().compareTo(new BigDecimal(0)) < 1) return false;
+        // If car status in other than available
+        if (rentCar.getStatus() != CarStatus.AVAILABLE) return false;
         return true;
     }
 }
