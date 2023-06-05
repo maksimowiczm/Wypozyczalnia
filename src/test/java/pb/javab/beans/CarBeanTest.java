@@ -9,6 +9,7 @@ import pb.javab.models.CarStatus;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -50,7 +51,7 @@ class CarBeanTest {
     public void persist_whenCarIsValidAndIdIsNotNull_callsDaoUpdate() {
         // arrange
         var car = new Car();
-        car.setId(1L);
+        car.setId(UUID.randomUUID());
         carBean.setCar(car);
 
         // act
@@ -131,11 +132,12 @@ class CarBeanTest {
     public void delete_whenExistingCarIdGivenAsParameter_CallsDaoDelete() {
         // arrange
         var car = Mockito.mock(Car.class);
-        car.setId(3L);
-        when(carDao.get(3L)).thenReturn(Optional.of(car));
+        var uuid = UUID.randomUUID();
+        car.setId(uuid);
+        when(carDao.get(uuid)).thenReturn(Optional.of(car));
 
         // act
-        carBean.delete(3);
+        carBean.delete(uuid);
 
         // assert
         verify(carDao, times(1)).delete(car);
@@ -144,10 +146,11 @@ class CarBeanTest {
     @Test
     public void delete_whenNonExistingCarIdGivenAsParameter_doesntCallDaoDelete() {
         // arrange
-        when(carDao.get(3L)).thenReturn(Optional.empty());
+        var uuid = UUID.randomUUID();
+        when(carDao.get(uuid)).thenReturn(Optional.empty());
 
         // act
-        carBean.delete(3);
+        carBean.delete(uuid);
 
         // assert
         verify(carDao, times(0)).delete(any());

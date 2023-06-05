@@ -9,6 +9,7 @@ import pb.javab.services.ICarRentalService;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -23,6 +24,7 @@ public class MyCarRentalBean implements Serializable {
     private final ICarRentalDao carRentalDao;
     private List<CarRental> myCarRentals;
     private CarRental carRental;
+    private String viewParamUuidString;
 
     @Inject
     public MyCarRentalBean(UserBean userBean, ICarRentalService carRentalService, ICarRentalDao carRentalDao) {
@@ -48,10 +50,15 @@ public class MyCarRentalBean implements Serializable {
             carRental = new CarRental();
 
         var id = carRental.getId();
-        if (id != null) {
-            if (carRental.getUser() == null)
-                carRental = carRentalDao.get(id).orElseThrow();
+        if (id == null) {
+            try {
+                id = UUID.fromString(viewParamUuidString);
+            } catch (IllegalArgumentException ignored) {
+                return carRental;
+            }
         }
+        if (carRental.getUser() == null)
+            carRental = carRentalDao.get(id).orElseThrow();
         return carRental;
     }
 
@@ -59,8 +66,15 @@ public class MyCarRentalBean implements Serializable {
         this.carRental = carRental;
     }
 
+    public String getViewParamUuidString() {
+        return viewParamUuidString;
+    }
+
+    public void setViewParamUuidString(String viewParamUuidString) {
+        this.viewParamUuidString = viewParamUuidString;
+    }
+
     public void makePayment() {
-        var id = this.getCarRental().getId();
-        carRentalService.pay(id);
+        carRentalService.pay(this.getCarRental().getId());
     }
 }

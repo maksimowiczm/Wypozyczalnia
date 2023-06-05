@@ -10,12 +10,14 @@
 <f:view>
     <h:head></h:head>
     <h:body>
-        <c:forEach items='${rentCarBean.availableCars}' var='car'>
+        <c:forEach items='#{rentCarBean.availableCars}' var='car'>
             <div>${car.id}</div>
             <div>${car.model}</div>
             <div>${car.manufacturer}</div>
-            <a href="${'availableCarDetails.xhtml?id='.concat(car.id)}"><p:button value="details"/></a>
-            <a href="${'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(car.id)}"><p:button value="rent"/></a>
+            <a href="#{'availableCarDetails.xhtml?id='.concat(car.id)}">
+                <p:button value="details"/>
+            </a>
+            <a href="#{'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(car.id)}"><p:button value="rent"/></a>
         </c:forEach>
     </h:body>
 </f:view>

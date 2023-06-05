@@ -15,7 +15,7 @@
     <h:body>
 
         <f:metadata>
-            <o:viewParam name="id" value="#{rentCarBean.rentCar.id}"/>
+            <o:viewParam name="id" value="#{rentCarBean.viewParamUuidString}"/>
         </f:metadata>
 
         <div>id ${rentCarBean.rentCar.id}</div>
@@ -27,7 +27,7 @@
         <div>rate ${rentCarBean.rentCar.rate}</div>
 
         <a href="availableCarList.xhtml"> <p:button value="back"/></a>
-        <a href="${'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(rentCarBean.rentCar.id)}"> <p:button
+        <a href="#{'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(rentCarBean.rentCar.id)}"> <p:button
                 value="rent"/></a>
     </h:body>
 </f:view>

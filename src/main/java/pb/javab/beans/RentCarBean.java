@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -31,6 +32,7 @@ public class RentCarBean implements Serializable {
     private Car rentCar;
     private CarRental carRental;
     private final Date today = new Date();
+    private String viewParamUuidString;
 
 
     @Inject
@@ -57,10 +59,15 @@ public class RentCarBean implements Serializable {
             rentCar = new Car();
 
         var id = rentCar.getId();
-        if (id != null) {
-            if (rentCar.getModel() == null)
-                rentCar = carDao.get(id).orElseThrow();
+        if (id == null) {
+            try {
+                id = UUID.fromString(viewParamUuidString);
+            } catch (IllegalArgumentException ignored) {
+                return rentCar;
+            }
         }
+        if (rentCar.getModel() == null)
+            rentCar = carDao.get(id).orElseThrow();
         return rentCar;
     }
 
@@ -102,6 +109,14 @@ public class RentCarBean implements Serializable {
         return today;
     }
 
+    public String getViewParamUuidString() {
+        return viewParamUuidString;
+    }
+
+    public void setViewParamUuidString(String viewParamUuidString) {
+        this.viewParamUuidString = viewParamUuidString;
+    }
+
     private void updatePrice() {
         //Both dates must be selected
         if (carRental.getRentalStartDate() == null || carRental.getRentalEndDate() == null) return;
@@ -124,5 +139,4 @@ public class RentCarBean implements Serializable {
         if (rentCar.getStatus() != CarStatus.AVAILABLE) return false;
         return true;
     }
-
 }
