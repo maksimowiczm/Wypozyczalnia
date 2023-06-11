@@ -18,7 +18,7 @@ Funkcjonalności
 - uwierzytelnianie ✔ Mateusz
 - wysyłanie emaila ❌
 
-### Strona admina ❌
+### Strona admina ✔
 
 - Car CRUD ✔ Mateusz/Piotrek
     - create ✔ Mateusz
