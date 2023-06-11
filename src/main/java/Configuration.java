@@ -8,6 +8,7 @@ import pb.javab.daos.IUserDao;
 import pb.javab.models.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Singleton
 @Startup
@@ -46,5 +47,16 @@ public class Configuration {
 
         var car3 = new Car("Rdzazda", "Mazda", 100, CarStatus.UNAVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
         carDao.save(car3);
+
+
+        var carRentals = new CarRental();
+        carRentals.setUser(user);
+        carRentals.setCar(car);
+        carRentals.setCreatedAt(new Date());
+        carRentals.setRentalStartDate(new Date());
+        carRentals.setRentalEndDate(new Date());
+        carRentals.setPrice(new BigDecimal(100));
+        carRentals.setStatus(CarRentalStatus.NOT_PAID);
+        carRentalDao.save(carRentals);
     }
 }

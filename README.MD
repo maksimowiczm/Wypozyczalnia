@@ -18,14 +18,14 @@ Funkcjonalności
 - uwierzytelnianie ✔ Mateusz
 - wysyłanie emaila ❌
 
-### Strona admina ❌
+### Strona admina ✔
 
 - Car CRUD ✔ Mateusz/Piotrek
     - create ✔ Mateusz
     - read ✔ Mateusz
     - update ✔ Mateusz
     - delete ✔ Piotrek
-- przeglądanie wszystkich wypożyczeń ❌
+- przeglądanie wszystkich wypożyczeń ✔ Mateusz
 
 ### Strona klienta ❌
 
