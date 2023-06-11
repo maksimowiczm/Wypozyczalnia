@@ -2,11 +2,13 @@ package pb.javab.daos;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import pb.javab.models.BaseModel;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public abstract class GenericDao<T> implements IGenericDao<T> {
+public abstract class GenericDao<T extends BaseModel> implements IGenericDao<T> {
 
     protected final Class<T> type;
     @PersistenceContext(unitName = "defaultPU")
@@ -18,6 +20,7 @@ public abstract class GenericDao<T> implements IGenericDao<T> {
 
     @Override
     public void save(T t) {
+        if (t.getId() == null) t.setId(UUID.randomUUID());
         em.persist(em.contains(t) ? t : em.merge(t));
     }
 
@@ -32,7 +35,7 @@ public abstract class GenericDao<T> implements IGenericDao<T> {
     }
 
     @Override
-    public Optional<T> get(Long id) {
+    public Optional<T> get(UUID id) {
         T obj = em.find(type, id);
         return Optional.ofNullable(obj);
     }

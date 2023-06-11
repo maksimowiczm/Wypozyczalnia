@@ -12,7 +12,7 @@
     </h:head>
     <h:body>
         <f:metadata>
-            <o:viewParam name="id" value="#{rentCarBean.rentCar.id}"/>
+            <o:viewParam name="id" value="#{rentCarBean.viewParamUuidString}"/>
         </f:metadata>
 
         <p:outputPanel>
@@ -32,7 +32,8 @@
                 <p:message for="price"/>
 
                 <p:outputLabel value="Start date:" for="startDateInput"/>
-                <p:datePicker id="startDateInput" value="#{rentCarBean.carRental.rentalStartDate}" required="true">
+                <p:datePicker id="startDateInput" value="#{rentCarBean.carRental.rentalStartDate}" required="true"
+                              mindate="#{rentCarBean.today}">
                     <p:ajax event="dateSelect" listener="#{rentCarBean.onStartDateSelect}" update="price"/>
                 </p:datePicker>
                 <p:message for="startDateInput"/>

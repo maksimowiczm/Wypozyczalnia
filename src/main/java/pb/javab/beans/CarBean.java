@@ -10,6 +10,7 @@ import pb.javab.models.CarStatus;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Named
 @ViewScoped
@@ -17,6 +18,7 @@ public class CarBean implements Serializable {
     private final ICarDao dao;
     private List<Car> cars;
     private Car car;
+    private String viewParamUuidString;
 
     @Inject
     public CarBean(ICarDao dao) {
@@ -40,10 +42,16 @@ public class CarBean implements Serializable {
             car = new Car();
 
         var id = car.getId();
-        if (id != null) {
-            if (car.getModel() == null)
-                car = dao.get(id).orElseThrow();
+        if (id == null) {
+            try {
+                id = UUID.fromString(viewParamUuidString);
+            } catch (IllegalArgumentException ignored) {
+                return car;
+            }
+            car.setId(id);
         }
+        if (car.getModel() == null)
+            car = dao.get(id).orElseThrow();
 
         return car;
     }
@@ -54,13 +62,21 @@ public class CarBean implements Serializable {
         }
     }
 
+    public String getViewParamUuidString() {
+        return viewParamUuidString;
+    }
+
+    public void setViewParamUuidString(String viewParamUuidString) {
+        this.viewParamUuidString = viewParamUuidString;
+    }
+
     public void delete() {
         if (car == null) return;
         dao.delete(car);
         car = null;
     }
 
-    public void delete(long id) {
+    public void delete(UUID id) {
         var carToDelete = dao.get(id).orElse(null);
         if (carToDelete == null) return;
         dao.delete(carToDelete);

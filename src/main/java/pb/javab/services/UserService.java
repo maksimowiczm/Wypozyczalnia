@@ -27,6 +27,8 @@ public class UserService {
         }
 
         user.setRole(db_user.getRole());
+        user.setId(db_user.getId());
+        user.setCarRentals(db_user.getCarRentals());
         return true;
     }
 

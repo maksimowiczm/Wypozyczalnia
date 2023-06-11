@@ -1,12 +1,13 @@
 package pb.javab.services;
 
 import pb.javab.models.CarRental;
-import pb.javab.models.CarStatus;
+
+import java.util.UUID;
 
 public interface ICarRentalService {
     boolean rent(CarRental carRental);
 
-    boolean pay(Long id);
+    boolean pay(UUID id);
 
-    boolean cancel(Long id);
+    boolean cancel(UUID id);
 }

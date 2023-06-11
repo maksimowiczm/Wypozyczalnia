@@ -13,9 +13,9 @@ import pb.javab.services.ICarRentalService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -31,9 +31,8 @@ public class RentCarBean implements Serializable {
     private List<Car> availableCars;
     private Car rentCar;
     private CarRental carRental;
-
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final Date today = new Date();
+    private String viewParamUuidString;
 
 
     @Inject
@@ -60,10 +59,15 @@ public class RentCarBean implements Serializable {
             rentCar = new Car();
 
         var id = rentCar.getId();
-        if (id != null) {
-            if (rentCar.getModel() == null)
-                rentCar = carDao.get(id).orElseThrow();
+        if (id == null) {
+            try {
+                id = UUID.fromString(viewParamUuidString);
+            } catch (IllegalArgumentException ignored) {
+                return rentCar;
+            }
         }
+        if (rentCar.getModel() == null)
+            rentCar = carDao.get(id).orElseThrow();
         return rentCar;
     }
 
@@ -101,20 +105,16 @@ public class RentCarBean implements Serializable {
         this.carRental = carRental;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Date getToday() {
+        return today;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public String getViewParamUuidString() {
+        return viewParamUuidString;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setViewParamUuidString(String viewParamUuidString) {
+        this.viewParamUuidString = viewParamUuidString;
     }
 
     private void updatePrice() {

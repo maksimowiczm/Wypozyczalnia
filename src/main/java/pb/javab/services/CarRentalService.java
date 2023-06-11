@@ -9,10 +9,7 @@ import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -39,7 +36,7 @@ public class CarRentalService implements ICarRentalService {
     }
 
     @Override
-    public boolean pay(Long id) {
+    public boolean pay(UUID id) {
         var rental = getCarRentalFromList(id);
         if (rental == null)
             return false;
@@ -52,7 +49,7 @@ public class CarRentalService implements ICarRentalService {
     }
 
     @Override
-    public boolean cancel(Long id) {
+    public boolean cancel(UUID id) {
         var rental = getCarRentalFromList(id);
         if (rental == null)
             return false;
@@ -64,7 +61,7 @@ public class CarRentalService implements ICarRentalService {
         return true;
     }
 
-    private CarRental getCarRentalFromList(Long id) {
+    private CarRental getCarRentalFromList(UUID id) {
         return carRentalToBePayed.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
     }
 
