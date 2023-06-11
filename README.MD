@@ -25,7 +25,7 @@ Funkcjonalności
     - read ✔ Mateusz
     - update ✔ Mateusz
     - delete ✔ Piotrek
-- przeglądanie wszystkich wypożyczeń ❌
+- przeglądanie wszystkich wypożyczeń ✔ Mateusz
 
 ### Strona klienta ❌
 
