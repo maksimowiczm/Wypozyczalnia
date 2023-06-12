@@ -74,10 +74,17 @@ public class MyCarRentalBean implements Serializable {
         this.viewParamUuidString = viewParamUuidString;
     }
 
-    public void makePayment() {
+    public String makePayment() {
         if (carRentalService.pay(this.getCarRental().getId())) {
             this.carRental = carRentalDao.get(this.carRental.getId()).orElseThrow();
         }
-        //TODO:Make page refresh
+        return "myCarRentalList.xhtml";
+    }
+
+    public String cancelReservation() {
+        if (carRentalService.cancel(this.getCarRental().getId())) {
+            this.carRental = carRentalDao.get(this.carRental.getId()).orElseThrow();
+        }
+        return "myCarRentalList.xhtml";
     }
 }

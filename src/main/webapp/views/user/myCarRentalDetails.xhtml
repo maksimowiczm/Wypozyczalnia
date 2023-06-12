@@ -19,6 +19,7 @@
             </f:metadata>
             <div>
                 Car details:
+                <div>Id: ${myCarRentalBean.carRental.car.id}</div>
                 <div>Model: ${myCarRentalBean.carRental.car.model}</div>
                 <div>Manufacturer: ${myCarRentalBean.carRental.car.manufacturer}</div>
                 <div>Power: ${myCarRentalBean.carRental.car.power}</div>
@@ -27,16 +28,19 @@
             </div>
             <div>
                 Rental details:
+                <div>Id: ${myCarRentalBean.carRental.id}</div>
                 <div>Price: ${myCarRentalBean.carRental.price}</div>
                 <div>From: ${myCarRentalBean.carRental.startDateString}</div>
                 <div>To: ${myCarRentalBean.carRental.endDateString}</div>
-                <p:outputLabel> ${myCarRentalBean.carRental.status} </p:outputLabel>
+                <div>Status: ${myCarRentalBean.carRental.status} </div>
             </div>
             <div>
                 <a href="myCarRentalList.xhtml"> <p:button value="back"/></a>
                 <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
-                    <p:commandButton value="Make payment" action="#{myCarRentalBean.makePayment()}" immediate="true"
-                                     process="@form"/>
+                    <p:commandButton value="Make payment" action="#{myCarRentalBean.makePayment()}" immediate="true"/>
+                </c:if>
+                <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
+                    <p:commandButton value="Cancel reservation" action="#{myCarRentalBean.cancelReservation()}" immediate="true"/>
                 </c:if>
             </div>
         </h:form>

@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @MappedSuperclass
 public class BaseModel {
-    // Xd
     @Id
     private UUID id;
 
