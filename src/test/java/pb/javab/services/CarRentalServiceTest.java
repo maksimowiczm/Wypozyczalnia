@@ -3,13 +3,11 @@ package pb.javab.services;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pb.javab.daos.ICarRentalDao;
+import pb.javab.models.Car;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -57,8 +55,9 @@ class CarRentalServiceTest {
         var rental = new CarRental();
         var uuid = UUID.randomUUID();
         rental.setId(uuid);
-        rental.setStatus(CarRentalStatus.PAID);
-        when(carRentalDao.getByStatus(CarRentalStatus.PAID)).thenReturn(List.of(rental));
+        rental.setStatus(CarRentalStatus.NOT_PAID);
+        rental.setCar(new Car());
+        when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(rental));
         carRentalService.init(carRentalDao);
 
         // act
@@ -72,6 +71,7 @@ class CarRentalServiceTest {
 
     @Test
     public void cancel_invalidCarRentalId_shouldReturnFalse() {
+        when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(new ArrayList<>());
         carRentalService.init(carRentalDao);
 
         var result = carRentalService.cancel(UUID.randomUUID());
@@ -85,13 +85,13 @@ class CarRentalServiceTest {
         var rental = new CarRental();
         var uuid = UUID.randomUUID();
         rental.setId(uuid);
-        rental.setStatus(CarRentalStatus.PAID);
+        rental.setStatus(CarRentalStatus.NOT_PAID);
         var calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, -1);
         rental.setCreatedAt(calendar.getTime());
 
-        when(carRentalDao.getByStatus(CarRentalStatus.PAID)).thenReturn(List.of(rental));
-        when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(new CarRental()));
+        when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(rental));
+        when(carRentalDao.getByStatus(CarRentalStatus.PAID)).thenReturn(List.of(new CarRental()));
         carRentalService.init(carRentalDao);
 
         // act

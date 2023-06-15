@@ -62,7 +62,7 @@ public class CarRentalService implements ICarRentalService {
     }
 
     private CarRental getCarRentalFromList(UUID id) {
-        return carRentalToBePayed.stream().filter(c -> c.getId().equals(id)).findAny().orElseThrow();
+        return carRentalToBePayed.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
     }
 
     /**
