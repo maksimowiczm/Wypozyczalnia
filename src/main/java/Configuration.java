@@ -9,6 +9,7 @@ import pb.javab.models.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Singleton
 @Startup
@@ -28,12 +29,14 @@ public class Configuration {
 
     private void seedDatabase() {
         var admin = new User();
+        admin.setId(UUID.randomUUID());
         admin.setRole(Role.ADMIN);
         admin.setEmail("admin@a.aa");
         admin.setPassword("admin");
         userDao.save(admin);
 
         var user = new User();
+        user.setId(UUID.randomUUID());
         user.setRole(Role.USER);
         user.setEmail("user@u.uu");
         user.setPassword("user");
@@ -49,14 +52,15 @@ public class Configuration {
         carDao.save(car3);
 
 
-        var carRentals = new CarRental();
-        carRentals.setUser(user);
-        carRentals.setCar(car);
-        carRentals.setCreatedAt(new Date());
-        carRentals.setRentalStartDate(new Date());
-        carRentals.setRentalEndDate(new Date());
-        carRentals.setPrice(new BigDecimal(100));
-        carRentals.setStatus(CarRentalStatus.NOT_PAID);
-        carRentalDao.save(carRentals);
+//        var carRentals = new CarRental();
+//        carRentals.setUser(user);
+//        carRentals.setCar(car);
+//        carRentals.setCreatedAt(new Date());
+//        carRentals.setRentalStartDate(new Date());
+//        carRentals.setRentalEndDate(new Date());
+//        carRentals.setPrice(new BigDecimal(100));
+//        carRentals.setStatus(CarRentalStatus.PAID);
+//        car.setStatus(CarStatus.UNAVAILABLE);
+//        carRentalDao.save(carRentals);
     }
 }

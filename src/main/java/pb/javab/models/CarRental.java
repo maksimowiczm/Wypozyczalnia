@@ -10,9 +10,9 @@ import java.util.Date;
 @Entity
 @Table(name = "carRental")
 public class CarRental extends BaseModel {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Car car;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User user;
     private Date createdAt;
     private Date rentalStartDate;
@@ -90,6 +90,6 @@ public class CarRental extends BaseModel {
     public String getEndDateString() {
         var pattern = "dd/MM/yyyy";
         DateFormat df = new SimpleDateFormat(pattern);
-        return df.format(this.rentalStartDate);
+        return df.format(this.rentalEndDate);
     }
 }

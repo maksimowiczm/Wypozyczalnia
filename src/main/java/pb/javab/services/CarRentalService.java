@@ -8,6 +8,7 @@ import jakarta.inject.Inject;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
+import pb.javab.models.CarStatus;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +26,6 @@ public class CarRentalService implements ICarRentalService {
         this.carRentalDao = carRentalDao;
         // get unpaid cars from db at startup
         carRentalToBePayed = new ArrayList<>(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID));
-        carRentalToBePayed.addAll(carRentalDao.getByStatus(CarRentalStatus.PAID));
     }
 
     @Override
@@ -51,9 +51,9 @@ public class CarRentalService implements ICarRentalService {
     @Override
     public boolean cancel(UUID id) {
         var rental = getCarRentalFromList(id);
-        if (rental == null)
+        if (rental == null || rental.getStatus() != CarRentalStatus.NOT_PAID)
             return false;
-
+        rental.getCar().setStatus(CarStatus.AVAILABLE);
         rental.setStatus(CarRentalStatus.CANCELED);
         carRentalDao.update(rental);
 
@@ -72,7 +72,7 @@ public class CarRentalService implements ICarRentalService {
      */
     protected List<CarRental> cancelAllCarRentalsThatAreNotPaidAndOlderThan(Date date) {
         var deletedCarRentals = new ArrayList<CarRental>();
-        var notPaid = carRentalToBePayed.stream().filter(c -> c.getStatus() == CarRentalStatus.PAID && c.getCreatedAt().before(date)).collect(Collectors.toList());
+        var notPaid = carRentalToBePayed.stream().filter(c -> c.getStatus() == CarRentalStatus.NOT_PAID && c.getCreatedAt().before(date)).collect(Collectors.toList());
 
         for (var rental : notPaid) {
             carRentalDao.delete(rental);
