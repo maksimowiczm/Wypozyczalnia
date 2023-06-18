@@ -29,6 +29,7 @@ Funkcjonalności
 
 ### Strona klienta ❌
 
+- CSS ❌
 - rejestracja ✔
     - walidacja emaila ✔ Mateusz
     - haszowanie hasła ✔ Klaudia
@@ -40,24 +41,20 @@ Funkcjonalności
 - opłata rezerwacji ✔ Piotrek
 - anulowanie rezerwacji ✔ Piotrek
 
-### Testy ❌
+### Testy ✔
 
-- CarBean ❌
+- CarBean ✔
     - persist ✔ Mateusz
     - delete ✔ Piotrek
     - getCar ✔ Klaudia
-- Dao ❌
-    - CarDao ❌
 - Servlet ✔ Mateusz
     - RegisterServlet ✔ Mateusz
         - handleRegister ✔ Mateusz
     - LoginServlet ✔ Mateusz
         - handleLogin ✔ Mateusz
-- UserService ❌
-    - authenticateAndAuthorizeUser ❌
 - AuthorizationFilter ✔ Mateusz
     - doFilter ✔ Mateusz
-- CarRentalServiceTest ✔ Mateusz
+- CarRentalService ✔ Mateusz
     - pay ✔ Mateusz
     - cancel ✔ Mateusz
-    - cancelAllCarRentalsThatAreNotPaidAndOlderThan 🚧 Mateusz
+    - cancelAllCarRentalsThatAreNotPaidAndOlderThan ✔ Mateusz
