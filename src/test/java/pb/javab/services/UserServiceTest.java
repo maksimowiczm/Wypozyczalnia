@@ -6,15 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import pb.javab.daos.IUserDao;
 import org.mockito.MockitoAnnotations;
-import pb.javab.models.Role;
-import pb.javab.models.User;
 
-
-import java.util.ArrayList;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
