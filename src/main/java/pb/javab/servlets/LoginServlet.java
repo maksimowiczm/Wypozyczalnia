@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 import pb.javab.beans.UserBean;
 import pb.javab.services.UserService;
 import pb.javab.models.User;
@@ -13,6 +14,8 @@ import pb.javab.utils.AuthorizationResult;
 import pb.javab.utils.UserLoginValidator;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -38,8 +41,9 @@ public class LoginServlet extends HttpServlet {
         if (valid != AuthorizationResult.SUCCESS) {
             return valid;
         }
+        // haszowanie
+        //String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        // TODO Haszowanie hasła
         var user = new User();
         user.setEmail(email);
         user.setPassword(password);

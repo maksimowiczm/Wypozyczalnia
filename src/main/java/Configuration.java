@@ -2,6 +2,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
+import org.mindrot.jbcrypt.BCrypt;
 import pb.javab.daos.ICarDao;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.daos.IUserDao;
@@ -39,7 +40,7 @@ public class Configuration {
         user.setId(UUID.randomUUID());
         user.setRole(Role.USER);
         user.setEmail("user@u.uu");
-        user.setPassword("user");
+        user.setPassword(BCrypt.hashpw("user", BCrypt.gensalt()));
         userDao.save(user);
 
         var car = new Car("Matiz", "Daeweoo", 40, CarStatus.AVAILABLE, Transmission.MANUAL, new BigDecimal(100));
