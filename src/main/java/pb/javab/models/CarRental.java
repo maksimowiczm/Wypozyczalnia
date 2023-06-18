@@ -9,7 +9,12 @@ import java.util.Date;
 
 @Entity
 @Table(name = "carRental")
+@NamedQueries(
+        @NamedQuery(name = CarRental.GetCarRentalByStatus,
+                query = "select cr from CarRental cr where cr.status=:status")
+)
 public class CarRental extends BaseModel {
+    public static final String GetCarRentalByStatus = "CarRental.GetCarRentalByStatus";
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Car car;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

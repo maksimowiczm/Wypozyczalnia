@@ -19,9 +19,6 @@ public class Configuration {
     @Inject
     private ICarDao carDao;
 
-    @Inject
-    private ICarRentalDao carRentalDao;
-
     @PostConstruct
     public void init() {
         seedDatabase();
@@ -50,17 +47,5 @@ public class Configuration {
 
         var car3 = new Car("Rdzazda", "Mazda", 100, CarStatus.UNAVAILABLE, Transmission.AUTOMATIC, new BigDecimal(200));
         carDao.save(car3);
-
-
-//        var carRentals = new CarRental();
-//        carRentals.setUser(user);
-//        carRentals.setCar(car);
-//        carRentals.setCreatedAt(new Date());
-//        carRentals.setRentalStartDate(new Date());
-//        carRentals.setRentalEndDate(new Date());
-//        carRentals.setPrice(new BigDecimal(100));
-//        carRentals.setStatus(CarRentalStatus.PAID);
-//        car.setStatus(CarStatus.UNAVAILABLE);
-//        carRentalDao.save(carRentals);
     }
 }
