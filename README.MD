@@ -29,23 +29,23 @@ Funkcjonalności
 
 ### Strona klienta ❌
 
-- rejestracja ❌
+- rejestracja ✔
     - walidacja emaila ✔ Mateusz
-    - haszowanie hasła ❌
+    - haszowanie hasła ✔ Klaudia
 - logowanie ✔ Mateusz
 - przeglądanie ofert wypożyczeń ✔ Piotrek
 - przeglądanie swoich wypożyczeń ✔ Piotrek
 - przeglądanie szczegółów wypożyczenia ✔ Piotrek
 - rezerwacja ✔ Piotrek
-- opłata rezerwacji ✔ Piotrek (TODO: refresh strony)
-- anulowanie rezerwacji ❌
+- opłata rezerwacji ✔ Piotrek
+- anulowanie rezerwacji ✔ Piotrek
 
 ### Testy ❌
 
 - CarBean ❌
     - persist ✔ Mateusz
     - delete ✔ Piotrek
-    - getCar ❌
+    - getCar ✔ Klaudia
 - Dao ❌
     - CarDao ❌
 - Servlet ✔ Mateusz
