@@ -13,7 +13,6 @@ public class CarRentalDao extends GenericDao<CarRental> implements ICarRentalDao
     }
 
     public List<CarRental> getByStatus(CarRentalStatus status) {
-        // TODO
-        return List.of();
+        return em.createNamedQuery(CarRental.GetCarRentalByStatus).setParameter("status", status).getResultList();
     }
 }
