@@ -9,6 +9,8 @@ import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 import pb.javab.models.CarStatus;
+import pb.javab.utils.EmailSender;
+import pb.javab.utils.IEmailSender;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,6 +21,9 @@ public class CarRentalService implements ICarRentalService {
     private ICarRentalDao carRentalDao;
 
     private List<CarRental> carRentalToBePayed;
+
+    @Inject
+    private IEmailSender emailSender;
 
     @PostConstruct
     @Inject
@@ -32,6 +37,7 @@ public class CarRentalService implements ICarRentalService {
     public boolean rent(CarRental carRental) {
         carRentalDao.save(carRental);
         carRentalToBePayed.add(carRental);
+        emailSender.SendEmail(carRental.getUser(), EmailSender.reservationCreatedMessage);
         return true;
     }
 
@@ -43,6 +49,8 @@ public class CarRentalService implements ICarRentalService {
 
         rental.setStatus(CarRentalStatus.PAID);
         carRentalDao.update(rental);
+
+        emailSender.SendEmail(rental.getUser(), EmailSender.reservationPayedMessage);
 
         carRentalToBePayed.remove(rental);
         return true;
@@ -56,6 +64,8 @@ public class CarRentalService implements ICarRentalService {
         rental.getCar().setStatus(CarStatus.AVAILABLE);
         rental.setStatus(CarRentalStatus.CANCELED);
         carRentalDao.update(rental);
+
+        emailSender.SendEmail(rental.getUser(), EmailSender.reservationCancelledByUserMessage);
 
         carRentalToBePayed.remove(rental);
         return true;
@@ -87,7 +97,9 @@ public class CarRentalService implements ICarRentalService {
     private void cancelNotPayedReservations() {
         var calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, -3);
-        var toBeEmailed = cancelAllCarRentalsThatAreNotPaidAndOlderThan(calendar.getTime());
-        // TODO wysylanie maila
+        List<CarRental> toBeEmailed = cancelAllCarRentalsThatAreNotPaidAndOlderThan(calendar.getTime());
+        for (CarRental rental : toBeEmailed) {
+            emailSender.SendEmail(rental.getUser(), EmailSender.reservationCancelledTimeoutMessage);
+        }
     }
 }
