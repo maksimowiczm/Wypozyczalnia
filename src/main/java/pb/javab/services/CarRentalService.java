@@ -25,6 +25,10 @@ public class CarRentalService implements ICarRentalService {
     @Inject
     private IEmailSender emailSender;
 
+    protected void setEmailSender(IEmailSender emailSender) {
+        this.emailSender = emailSender;
+    }
+
     @PostConstruct
     @Inject
     public void init(ICarRentalDao carRentalDao) {

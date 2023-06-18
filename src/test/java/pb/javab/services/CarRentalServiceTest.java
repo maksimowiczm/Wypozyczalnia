@@ -6,30 +6,37 @@ import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.Car;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
+import pb.javab.models.User;
+import pb.javab.utils.EmailSender;
+import pb.javab.utils.IEmailSender;
 
 import java.util.*;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CarRentalServiceTest {
     private final CarRentalService carRentalService;
     private final ICarRentalDao carRentalDao;
+    private final IEmailSender emailSender;
 
     public CarRentalServiceTest() {
         carRentalDao = Mockito.mock(ICarRentalDao.class);
+        emailSender = Mockito.mock(IEmailSender.class);
         carRentalService = new CarRentalService();
     }
 
     @Test
     public void pay_validCarRentalId_shouldCallCarRentalDaoWithUpdatedCarRentalStatusAndReturnTrue() {
         // arrange
+        var user = new User();
         var rental = new CarRental();
         var uuid = UUID.randomUUID();
         rental.setId(uuid);
+        rental.setUser(user);
         rental.setStatus(CarRentalStatus.NOT_PAID);
         when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(rental));
         carRentalService.init(carRentalDao);
+        carRentalService.setEmailSender(emailSender);
 
         // act
         var result = carRentalService.pay(uuid);
@@ -37,6 +44,7 @@ class CarRentalServiceTest {
         // assert
         assert result;
         verify(carRentalDao).update(rental);
+        verify(emailSender, atMostOnce()).SendEmail(user, EmailSender.reservationPayedMessage);
         assert rental.getStatus() == CarRentalStatus.PAID;
     }
 
@@ -52,13 +60,16 @@ class CarRentalServiceTest {
     @Test
     public void cancel_validCarRentalId_shouldCallCarRentalDaoWithUpdatedCarRentalStatusAndReturnTrue() {
         // arrange
+        var user = new User();
         var rental = new CarRental();
         var uuid = UUID.randomUUID();
+        rental.setUser(user);
         rental.setId(uuid);
         rental.setStatus(CarRentalStatus.NOT_PAID);
         rental.setCar(new Car());
         when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(rental));
         carRentalService.init(carRentalDao);
+        carRentalService.setEmailSender(emailSender);
 
         // act
         var result = carRentalService.cancel(uuid);
@@ -66,6 +77,7 @@ class CarRentalServiceTest {
         // assert
         assert result;
         verify(carRentalDao).update(rental);
+        verify(emailSender, atMostOnce()).SendEmail(user, EmailSender.reservationCancelledByUserMessage);
         assert rental.getStatus() == CarRentalStatus.CANCELED;
     }
 
