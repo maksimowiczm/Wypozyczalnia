@@ -11,7 +11,6 @@ import pb.javab.services.UserService;
 import pb.javab.models.User;
 import pb.javab.utils.AuthorizationResult;
 import pb.javab.utils.UserLoginValidator;
-
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -38,8 +37,9 @@ public class LoginServlet extends HttpServlet {
         if (valid != AuthorizationResult.SUCCESS) {
             return valid;
         }
+        // haszowanie
+        //String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        // TODO Haszowanie hasła
         var user = new User();
         user.setEmail(email);
         user.setPassword(password);

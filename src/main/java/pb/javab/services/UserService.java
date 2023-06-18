@@ -6,7 +6,7 @@ import jakarta.inject.Inject;
 import pb.javab.daos.IUserDao;
 import pb.javab.models.Role;
 import pb.javab.models.User;
-
+import org.mindrot.jbcrypt.BCrypt;
 @Singleton
 public class UserService {
     private IUserDao userDao;
@@ -22,7 +22,8 @@ public class UserService {
         if (db_user == null) {
             return false;
         }
-        if (!db_user.getPassword().equals(user.getPassword())) {
+
+        if (!BCrypt.checkpw(user.getPassword(),db_user.getPassword())) {
             return false;
         }
 
