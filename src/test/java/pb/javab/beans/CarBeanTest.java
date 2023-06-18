@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -22,6 +23,38 @@ class CarBeanTest {
     CarBeanTest() {
         carDao = Mockito.mock(ICarDao.class);
         carBean = new CarBean(carDao);
+    }
+
+    @Test
+    public void testGetCar_WithValidId_ReturnsCar() {
+            // Arrange
+            UUID carId = UUID.randomUUID();
+            Car expectedCar = new Car();
+            expectedCar.setId(carId);
+            when(carDao.get(carId)).thenReturn(Optional.of(expectedCar));
+
+            // Act
+            carBean.setViewParamUuidString(carId.toString());
+            Car actualCar = carBean.getCar();
+
+            // Assert
+            assertNotNull(actualCar);
+            assertEquals(expectedCar, actualCar);
+        }
+
+    @Test
+    public void testGetCar_WithInvalidId_ReturnsNewCar() {
+        // Arrange
+        String invalidIdString = "invalid-id";
+        when(carDao.get(Mockito.any())).thenReturn(Optional.empty());
+
+        // Act
+        carBean.setViewParamUuidString(invalidIdString);
+        Car actualCar = carBean.getCar();
+
+        // Assert
+        assertNotNull(actualCar);
+        assertNull(actualCar.getId());
     }
 
     @Test
