@@ -16,29 +16,34 @@
         <link rel="stylesheet" href="style.css"></link>
     </h:head>
     <h:body>
-        <div>
-            <c:if test="${userBean.user == null}">
-                <a href="login.xhtml">login</a>
-                <a href="register.xhtml">register</a>
-            </c:if>
-            <c:if test="${userBean.user != null}">
-                <div>${userBean.user.email}<a href="logout"> logout</a></div>
+        <div class="center">
+            <h1>Wypożyczalnia</h1>
+            <div>
+                <c:if test="${userBean.user == null}">
+                    <div class="justLink"><a href="login.xhtml">Login</a></div>
+                    <div class="justLink"><a href="register.xhtml">Register</a></div>
+                </c:if>
+                <c:if test="${userBean.user != null}">
+                    <div>
+                        <div class="userName">"${userBean.user.email}"</div>
+                        <div class="justLink"><a href="logout"> Logout</a></div>
+                    </div>
+                </c:if>
+            </div>
+            <div>
+                <c:if test="${userBean.user == null or userBean.user.role != 'ADMIN'}">
+                    <div class="justLink"><a href="views/guest/availableCarList.xhtml">Rent a car</a></div>
+                </c:if>
+            </div>
+            <div>
+                <c:if test="${userBean.user != null and userBean.user.role == 'USER'}">
+                    <div class="justLink"><a href="views/user/myCarRentalList.xhtml">My rentals</a></div>
+                </c:if>
+            </div>
+            <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
+                <a href="views/admin/">admin panel</a>
             </c:if>
         </div>
-        <div>
-            <c:if test="${userBean.user == null or userBean.user.role != 'ADMIN'}">
-                <a href="views/guest/availableCarList.xhtml">rent a car</a>
-            </c:if>
-        </div>
-        <div>
-            <c:if test="${userBean.user != null and userBean.user.role == 'USER'}">
-                <a href="views/user/myCarRentalList.xhtml">my rentals</a>
-            </c:if>
-        </div>
-        <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
-            <a href="views/admin/">admin panel</a>
-        </c:if>
-
     </h:body>
 </f:view>
 </html>

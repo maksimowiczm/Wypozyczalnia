@@ -105,3 +105,25 @@ form .dataID{
 .signup_link a:hover{
     text-decoration: underline;
 }
+
+.justLink{
+    margin: 15px 0;
+    text-align: center;
+    font-size: 19px;
+    color: #666666;
+}
+.justLink a{
+    color: #a75265;
+    text-decoration: none;
+}
+.justLink a:hover{
+    text-decoration: underline;
+}
+
+.userName{
+    text-align: center;
+    font-size: 24px;
+    padding: 10px 0 0 0;
+    color: #febe7e;
+    font-weight: bold;
+}
