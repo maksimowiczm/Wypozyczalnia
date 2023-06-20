@@ -29,7 +29,7 @@ public class Configuration {
         admin.setId(UUID.randomUUID());
         admin.setRole(Role.ADMIN);
         admin.setEmail("admin@a.aa");
-        admin.setPassword("admin");
+        admin.setPassword(BCrypt.hashpw("admin", BCrypt.gensalt()));
         userDao.save(admin);
 
         var user = new User();
