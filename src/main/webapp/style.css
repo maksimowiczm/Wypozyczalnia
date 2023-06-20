@@ -64,6 +64,16 @@ form .dataID {
     background: none;
     outline: none;
 }
+.dataID .chooseMenuValue {
+    text-align: center;
+    width: 100%;
+    padding: 0 5px 0 40px ;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
 
 .dataID .inputDateValue {
     text-align: center;
@@ -124,6 +134,18 @@ form .dataID {
 
 .btnM {
     width: 50%;
+    height: 50px;
+    border: 1px solid;
+    background: #a75265;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+.btnxM {
+    width: 30%;
     height: 50px;
     border: 1px solid;
     background: #a75265;

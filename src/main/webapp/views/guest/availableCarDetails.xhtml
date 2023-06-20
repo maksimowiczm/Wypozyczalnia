@@ -20,7 +20,7 @@
                 <o:viewParam name="id" value="#{rentCarBean.viewParamUuidString}"/>
             </f:metadata>
             <div class="signup_link">
-                <div><b>id:</b> ${rentCarBean.rentCar.id}</div>
+                <div><b>id: </b> ${rentCarBean.rentCar.id}</div>
                 <div><b>model: </b>${rentCarBean.rentCar.model}</div>
                 <div><b>manufacturer: </b> ${rentCarBean.rentCar.manufacturer}</div>
                 <div><b>power: </b>${rentCarBean.rentCar.power}</div>
@@ -30,7 +30,7 @@
                 <a href="availableCarList.xhtml"> <p:commandButton styleClass="btnS" value="back"/></a>
                 <a href="#{'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(rentCarBean.rentCar.id)}">
                     <p:commandButton
-                            styleClass="btnM" value="rent"/></a>
+                            styleClass="btnS" value="rent"/></a>
                 <div class="signup_link">
                     Don't want to be here? <a href="../../index.xhtml">Main-page</a>
                 </div>

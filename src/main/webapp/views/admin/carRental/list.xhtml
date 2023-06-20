@@ -8,17 +8,28 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
-    <h:head></h:head>
+    <h:head>
+        <title>Rented cars</title>
+        <link rel="stylesheet" href="../../../style.css"/>
+    </h:head>
     <h:body>
-        <c:forEach items='${carRentalBean.carRentalList}' var='rental'>
-            <div>id: ${rental.id}</div>
-            <div>user: ${rental.user.email}</div>
-            <div>start: ${rental.rentalStartDate}</div>
-            <div>end: ${rental.rentalEndDate}</div>
-            <div>price: ${rental.price}</div>
-            <div>status: ${rental.status}</div>
-            <div>car: ${rental.car.manufacturer} ${rental.car.model}</div>
-        </c:forEach>
+        <div class="center">
+            <h1>Rented cars</h1>
+            <c:forEach items='${carRentalBean.carRentalList}' var='rental'>
+                <div class="signup_link">
+                    <div><b>id: </b>${rental.id}</div>
+                    <div><b>user: </b>${rental.user.email}</div>
+                    <div><b>start: </b>${rental.rentalStartDate}</div>
+                    <div><b>end: </b>${rental.rentalEndDate}</div>
+                    <div><b>price: </b>${rental.price}</div>
+                    <div><b>status: </b>${rental.status}</div>
+                    <div><b>car: </b>${rental.car.manufacturer} ${rental.car.model}</div>
+                </div>
+            </c:forEach>
+            <div class="signup_link">
+                Don't want to be here? <a href="../../../index.xhtml">Main-Admin-page</a>
+            </div>
+        </div>
     </h:body>
 </f:view>
 </html>
