@@ -9,7 +9,7 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
     <h:head>
-        <title>Dostępne samochody</title>
+        <title>Avaliable cars</title>
         <link rel="stylesheet" href="../../style.css"/>
     </h:head>
     <h:body>
@@ -24,7 +24,7 @@
                 <div class="signup_link">
                     <div><b>ID of car: </b>${car.id}</div>
                     <div><b>Model of car: </b>${car.model}</div>
-                    <div><b>Manufacturer of car: </b>${car.manufacturer}</div>
+                    <div><b>Manufacturer of car: </b>${car.manufacturer}</div><br></br>
                     <a href="#{'availableCarDetails.xhtml?id='.concat(car.id)}">
                         <p:commandButton styleClass="btnM" value="details"/>
                     </a>

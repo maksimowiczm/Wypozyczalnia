@@ -33,6 +33,11 @@ body {
     border-bottom: 1px solid silver;
 }
 
+.center .dataID h2 {
+    text-align: center;
+    padding: 20px 0;
+}
+
 .center form {
     padding: 0 40px;
     box-sizing: border-box;
@@ -60,7 +65,29 @@ form .dataID {
     outline: none;
 }
 
+.dataID .inputDateValue {
+    text-align: center;
+    width: 45%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
 .dataID .labelOut {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.dataID .labelOutRight {
     position: absolute;
     top: 50%;
     left: 5px;
@@ -95,7 +122,7 @@ form .dataID {
     outline: none;
 }
 
-.btnM{
+.btnM {
     width: 50%;
     height: 50px;
     border: 1px solid;
@@ -108,7 +135,7 @@ form .dataID {
     outline: none;
 }
 
-.btnS{
+.btnS {
     width: 25%;
     height: 50px;
     border: 1px solid;
