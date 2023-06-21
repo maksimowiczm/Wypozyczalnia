@@ -8,10 +8,19 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
-    <h:head></h:head>
+    <h:head>
+        <title>Admin panel</title>
+        <link rel="stylesheet" href="../../style.css"/>
+    </h:head>
     <h:body>
-        <div><a href="car/list.xhtml">cars crud</a></div>
-        <div><a href="carRental/list.xhtml">car rental list</a></div>
+        <div class="center">
+            <h1>Admin panel</h1>
+            <div class="justLink"><a href="car/list.xhtml">Cars CRUD</a></div>
+            <div class="justLink"><a href="carRental/list.xhtml">Car rental list</a></div>
+            <div class="signup_link">
+                Don't want to be here? <a href="../../index.xhtml">Main-Admin-page</a>
+            </div>
+        </div>
     </h:body>
 </f:view>
 </html>

@@ -10,40 +10,51 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
     <h:head>
-
+        <title>Rental car details</title>
+        <link rel="stylesheet" href="../../style.css"/>
     </h:head>
     <h:body>
-        <h:form>
-            <f:metadata>
-                <o:viewParam name="id" value="#{myCarRentalBean.viewParamUuidString}"/>
-            </f:metadata>
-            <div>
-                Car details:
-                <div>Id: ${myCarRentalBean.carRental.car.id}</div>
-                <div>Model: ${myCarRentalBean.carRental.car.model}</div>
-                <div>Manufacturer: ${myCarRentalBean.carRental.car.manufacturer}</div>
-                <div>Power: ${myCarRentalBean.carRental.car.power}</div>
-                <div>Transmission: ${myCarRentalBean.carRental.car.transmission}</div>
-                <div>Rate: ${myCarRentalBean.carRental.car.rate}</div>
-            </div>
-            <div>
-                Rental details:
-                <div>Id: ${myCarRentalBean.carRental.id}</div>
-                <div>Price: ${myCarRentalBean.carRental.price}</div>
-                <div>From: ${myCarRentalBean.carRental.startDateString}</div>
-                <div>To: ${myCarRentalBean.carRental.endDateString}</div>
-                <div>Status: ${myCarRentalBean.carRental.status} </div>
-            </div>
-            <div>
-                <a href="myCarRentalList.xhtml"> <p:button value="back"/></a>
-                <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
-                    <p:commandButton value="Make payment" action="#{myCarRentalBean.makePayment()}" immediate="true"/>
-                </c:if>
-                <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
-                    <p:commandButton value="Cancel reservation" action="#{myCarRentalBean.cancelReservation()}" immediate="true"/>
-                </c:if>
-            </div>
-        </h:form>
+        <div class="center">
+            <h1>Rental car details</h1>
+            <h:form>
+                <f:metadata>
+                    <o:viewParam name="id" value="#{myCarRentalBean.viewParamUuidString}"/>
+                </f:metadata>
+                <div class="dataID">
+                    <h2 style="color: #a75265">Car details:</h2>
+                    <div><b>Id: </b>${myCarRentalBean.carRental.car.id}</div>
+                    <div><b>Model: </b>${myCarRentalBean.carRental.car.model}</div>
+                    <div><b>Manufacturer: </b>${myCarRentalBean.carRental.car.manufacturer}</div>
+                    <div><b>Power: </b>${myCarRentalBean.carRental.car.power}</div>
+                    <div><b>Transmission: </b>${myCarRentalBean.carRental.car.transmission}</div>
+                    <div><b>Rate: </b>${myCarRentalBean.carRental.car.rate}</div>
+                </div>
+                <div class="dataID">
+                    <h2 style="color: #ec7263">Rental details:</h2>
+                    <div><b>Id: </b>${myCarRentalBean.carRental.id}</div>
+                    <div><b>Price: </b>${myCarRentalBean.carRental.price}</div>
+                    <div><b>From: </b>${myCarRentalBean.carRental.startDateString}</div>
+                    <div><b>To: </b>${myCarRentalBean.carRental.endDateString}</div>
+                    <div style="color: darkred"><b>Status: </b>${myCarRentalBean.carRental.status} </div>
+                </div>
+                <div class="signup_link">
+                    <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
+                        <p:commandButton styleClass="btn" value="Make payment" action="#{myCarRentalBean.makePayment()}"
+                                         immediate="true"/>
+                    </c:if>
+                    <div style="margin-bottom: 5px"></div>
+                    <c:if test="#{myCarRentalBean.carRental.status == 'NOT_PAID'}">
+                        <p:commandButton style="background: #ec7263!important;" styleClass="btn" value="Cancel reservation" action="#{myCarRentalBean.cancelReservation()}"
+                                         immediate="true"/>
+                    </c:if>
+                    <div style="margin-bottom: 5px"></div>
+                    <a href="myCarRentalList.xhtml"> <p:button style="background: #febe7e !important" styleClass="btnS" value="back"/></a>
+                    <div class="signup_link">
+                        Don't want to be here? <a href="../../index.xhtml">Main-page</a>
+                    </div>
+                </div>
+            </h:form>
+        </div>
     </h:body>
 </f:view>
 </html>

@@ -8,47 +8,72 @@
       xmlns:o="http://omnifaces.org/ui">
 <f:view>
     <h:head>
-
+        <title>Edit car details</title>
+        <link rel="stylesheet" href="../../../style.css"/>
     </h:head>
     <h:body>
-        <f:metadata>
-            <o:viewParam name="id" value="#{carBean.viewParamUuidString}"/>
-        </f:metadata>
+        <div class="center">
+            <h1>Car list</h1>
+            <f:metadata>
+                <o:viewParam name="id" value="#{carBean.viewParamUuidString}"/>
+            </f:metadata>
 
-        <p:outputPanel>
-            <h:form>
-                <p:outputLabel value="Model:" for="modelInput"/>
-                <p:inputText value="#{carBean.car.model}" id="modelInput" label="model" required="true"/>
-                <p:message for="modelInput"/>
+            <p:outputPanel>
+                <h:form>
+                    <div class="dataID">
+                        <p:outputLabel styleClass="labelOut" value="Model:" for="modelInput"/><span></span>
+                        <p:inputText value="#{carBean.car.model}" styleClass="inputValue" id="modelInput" label="model"
+                                     required="true"/>
+                        <p:message for="modelInput"/>
+                    </div>
 
-                <p:outputLabel value="Manufacturer:" for="manufacturerInput"/>
-                <p:inputText value="#{carBean.car.manufacturer}" id="manufacturerInput" label="manufacturer"
-                             required="true"/>
-                <p:message for="manufacturerInput"/>
+                    <div class="dataID">
+                        <p:outputLabel styleClass="labelOut" value="Manufacturer:"
+                                       for="manufacturerInput"/><span></span>
+                        <p:inputText value="#{carBean.car.manufacturer}" styleClass="inputValue" id="manufacturerInput"
+                                     label="manufacturer"
+                                     required="true"/>
+                        <p:message for="manufacturerInput"/>
+                    </div>
 
-                <p:outputLabel value="Power:" for="powerInput"/>
-                <p:inputText value="#{carBean.car.power}" id="powerInput" label="power" required="true">
-                </p:inputText>
-                <p:message for="powerInput"/>
+                    <div class="dataID">
+                        <p:outputLabel styleClass="labelOut" value="Power:" for="powerInput"/><span></span>
+                        <p:inputText value="#{carBean.car.power}" styleClass="inputValue" id="powerInput" label="power"
+                                     required="true">
+                        </p:inputText>
+                        <p:message for="powerInput"/>
+                    </div>
 
-                <h:outputLabel value="Transmission:" for="transmissionInput"/>
-                <o:importConstants type="pb.javab.models.Transmission"/>
-                <h:selectOneMenu id="transmissionInput" value="#{carBean.car.transmission}">
-                    <f:selectItems value="#{Transmission}"/>
-                </h:selectOneMenu>
-                <p:message for="transmissionInput"/>
+                    <div class="dataID">
+                        <h:outputLabel styleClass="labelOut" value="Transmission:"
+                                       for="transmissionInput"/><span></span>
+                        <o:importConstants type="pb.javab.models.Transmission"/>
+                        <h:selectOneMenu styleClass="chooseMenuValue" id="transmissionInput"
+                                         value="#{carBean.car.transmission}">
+                            <f:selectItems value="#{Transmission}"/>
+                        </h:selectOneMenu>
+                        <p:message for="transmissionInput"/>
+                    </div>
 
-                <p:outputLabel value="Rate:" for="rateInput"/>
-                <p:inputText value="#{carBean.car.rate}" id="rateInput" label="rate" required="true">
-                </p:inputText>
-                <p:message for="rateInput"/>
-
-                <p:commandButton value="Save" icon="ui-icon-disk" actionListener="#{carBean.persist}"
-                                 action="/views/admin/car/list?faces-redirect=true" update="@form"/>
-                <p:commandButton value="Cancel" icon="ui-icon-close"
-                                 action="/views/admin/car/list?faces-redirect=true" immediate="true"/>
-            </h:form>
-        </p:outputPanel>
+                    <div class="dataID">
+                        <p:outputLabel styleClass="labelOut" value="Rate:" for="rateInput"/><span></span>
+                        <p:inputText value="#{carBean.car.rate}" styleClass="inputValue" id="rateInput" label="rate"
+                                     required="true">
+                        </p:inputText>
+                        <p:message for="rateInput"/>
+                    </div>
+                    <div class="signup_link">
+                        <p:commandButton value="Save" styleClass="btnxM" actionListener="#{carBean.persist}"
+                                         action="/views/admin/car/list?faces-redirect=true" update="@form"/>
+                        <p:commandButton value="Cancel" styleClass="btnxM"
+                                         action="/views/admin/car/list?faces-redirect=true" immediate="true"/>
+                        <div class="signup_link">
+                            Don't want to be here? <a href="../../../index.xhtml">Main-Admin-page</a>
+                        </div>
+                    </div>
+                </h:form>
+            </p:outputPanel>
+        </div>
     </h:body>
 </f:view>
 </html>

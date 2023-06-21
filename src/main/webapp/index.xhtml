@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -12,32 +10,34 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
     <h:head>
-
+        <title>Wypożyczalnia samochodów</title>
+        <link rel="stylesheet" href="style.css"></link>
     </h:head>
     <h:body>
-        <div>
-            <c:if test="${userBean.user == null}">
-                <a href="login.xhtml">login</a>
-                <a href="register.xhtml">register</a>
-            </c:if>
-            <c:if test="${userBean.user != null}">
-                <div>${userBean.user.email}<a href="logout"> logout</a></div>
-            </c:if>
+        <div class="center">
+            <h1>Wypożyczalnia</h1>
+            <div>
+                <c:if test="${userBean.user == null}">
+                    <div class="justLink"><a href="login.xhtml">Login</a></div>
+                    <div class="justLink"><a href="register.xhtml">Register</a></div>
+                </c:if>
+                <c:if test="${userBean.user != null}">
+                    <div>
+                        <div class="userName">"${userBean.user.email}"</div>
+                        <div class="justLink"><a href="logout"> Logout</a></div>
+                    </div>
+                </c:if>
+                <c:if test="${userBean.user == null or userBean.user.role != 'ADMIN'}">
+                    <div class="justLink"><a href="views/guest/availableCarList.xhtml">Rent a car</a></div>
+                </c:if>
+                <c:if test="${userBean.user != null and userBean.user.role == 'USER'}">
+                    <div class="justLink"><a href="views/user/myCarRentalList.xhtml">My rentals</a></div>
+                </c:if>
+                <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
+                    <div class="justLink"><a href="views/admin/">Admin panel</a></div>
+                </c:if>
+            </div>
         </div>
-        <div>
-            <c:if test="${userBean.user == null or userBean.user.role != 'ADMIN'}">
-                <a href="views/guest/availableCarList.xhtml">rent a car</a>
-            </c:if>
-        </div>
-        <div>
-            <c:if test="${userBean.user != null and userBean.user.role == 'USER'}">
-                <a href="views/user/myCarRentalList.xhtml">my rentals</a>
-            </c:if>
-        </div>
-        <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
-            <a href="views/admin/">admin panel</a>
-        </c:if>
-
     </h:body>
 </f:view>
 </html>
