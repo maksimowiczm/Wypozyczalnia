@@ -27,20 +27,16 @@
                         <div class="justLink"><a href="logout"> Logout</a></div>
                     </div>
                 </c:if>
-            </div>
-            <div>
                 <c:if test="${userBean.user == null or userBean.user.role != 'ADMIN'}">
                     <div class="justLink"><a href="views/guest/availableCarList.xhtml">Rent a car</a></div>
                 </c:if>
-            </div>
-            <div>
                 <c:if test="${userBean.user != null and userBean.user.role == 'USER'}">
                     <div class="justLink"><a href="views/user/myCarRentalList.xhtml">My rentals</a></div>
                 </c:if>
+                <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
+                    <div class="justLink"><a href="views/admin/">Admin panel</a></div>
+                </c:if>
             </div>
-            <c:if test="${userBean.user != null and userBean.user.role == 'ADMIN'}">
-                <div class="justLink"> <a href="views/admin/">Admin panel</a></div>
-            </c:if>
         </div>
     </h:body>
 </f:view>

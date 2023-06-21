@@ -13,25 +13,28 @@
         <link rel="stylesheet" href="../../../style.css"/>
     </h:head>
     <h:body>
-        <div class="center">
+        <div class="center ">
             <h1>Car list</h1>
             <div class="signup_link"><a href="form.xhtml"> <p:button styleClass="btnS" value="create"/></a></div>
             <c:forEach items='${carBean.cars}' var='car'>
-                <div class="signup_link">
-                    <div><b>id: </b>${car.id}</div>
-                    <div><b>model: </b>${car.model}</div>
-                    <div><b>manufacturer: </b>${car.manufacturer}</div>
-                </div>
-                <h:form>
+                <div class="xd">
                     <div class="signup_link">
-                        <a href="${'form.xhtml?id='.concat(car.id)}"><p:button styleClass="btnxM"
-                                                                                      value="edit"/></a>
-                        <a href="${'details.xhtml?id='.concat(car.id)}"><p:button styleClass="btnxM"
-                                                                                         value="details"/></a>
-                        <p:commandButton value="delete" styleClass="btnxM" actionListener="${carBean.delete(car.id)}"
-                                         action="/views/admin/car/list?faces-redirect=true"/>
+                        <div><b>id: </b>${car.id}</div>
+                        <div><b>model: </b>${car.model}</div>
+                        <div><b>manufacturer: </b>${car.manufacturer}</div>
                     </div>
-                </h:form>
+                    <h:form>
+                        <div class="signup_link">
+                            <a href="${'form.xhtml?id='.concat(car.id)}"><p:button styleClass="btnxM"
+                                                                                   value="edit"/></a>
+                            <a href="${'details.xhtml?id='.concat(car.id)}"><p:button styleClass="btnxM"
+                                                                                      value="details"/></a>
+                            <p:commandButton value="delete" styleClass="btnxM"
+                                             actionListener="${carBean.delete(car.id)}"
+                                             action="/views/admin/car/list?faces-redirect=true"/>
+                        </div>
+                    </h:form>
+                </div>
             </c:forEach>
             <div class="signup_link">
                 Don't want to be here? <a href="../../../index.xhtml">Main-Admin-page</a>

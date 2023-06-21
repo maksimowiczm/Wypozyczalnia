@@ -9,8 +9,8 @@ body {
     margin: 0;
     padding: 0;
     background: #57385c;
-    height: 100vh;
-    overflow: hidden;
+    height: 100%;
+    overflow: auto;
 }
 
 .carDetails {
@@ -18,13 +18,17 @@ body {
 }
 
 .center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 5% auto;
+    height: 100%;
+    scroll-behavior: smooth;
+    position: relative;
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
     width: 400px;
     background: white;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .center h1 {
@@ -64,10 +68,11 @@ form .dataID {
     background: none;
     outline: none;
 }
+
 .dataID .chooseMenuValue {
     text-align: center;
     width: 100%;
-    padding: 0 5px 0 40px ;
+    padding: 0 5px 0 40px;
     height: 40px;
     font-size: 16px;
     border: none;
@@ -144,6 +149,7 @@ form .dataID {
     cursor: pointer;
     outline: none;
 }
+
 .btnxM {
     width: 30%;
     height: 50px;
@@ -178,7 +184,7 @@ form .dataID {
 }
 
 .signup_link {
-    margin: 30px 0;
+    margin: 10px 0;
     text-align: center;
     font-size: 16px;
     color: #666666;
@@ -195,7 +201,7 @@ form .dataID {
 }
 
 .justLink {
-    margin: 15px 0;
+    margin: 10px 0;
     text-align: center;
     font-size: 19px;
     color: #666666;
@@ -216,4 +222,8 @@ form .dataID {
     padding: 10px 0 0 0;
     color: #febe7e;
     font-weight: bold;
+}
+.xd{
+    margin-bottom: 15px;
+    border-bottom: 1px solid silver;
 }
