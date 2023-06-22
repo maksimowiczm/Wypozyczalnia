@@ -22,6 +22,7 @@ public abstract class GenericDao<T extends BaseModel> implements IGenericDao<T> 
     public void save(T t) {
         if (t.getId() == null) t.setId(UUID.randomUUID());
         em.persist(em.contains(t) ? t : em.merge(t));
+        var test = 1;
     }
 
     @Override
