@@ -26,10 +26,11 @@
                 <div><b>power: </b>${rentCarBean.rentCar.power}</div>
                 <div><b>status: </b> ${rentCarBean.rentCar.status}</div>
                 <div><b>transmission: </b> ${rentCarBean.rentCar.transmission}</div>
-                <div><b>rate: </b> ${rentCarBean.rentCar.rate}</div><br></br>
-                <a href="availableCarList.xhtml"> <p:commandButton styleClass="btnS" value="back"/></a>
+                <div><b>rate: </b> ${rentCarBean.rentCar.rate}</div>
+                <br></br>
+                <a href="availableCarList.xhtml"> <p:button styleClass="btnS" value="back"/></a>
                 <a href="#{'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(rentCarBean.rentCar.id)}">
-                    <p:commandButton
+                    <p:button
                             styleClass="btnS" value="rent"/></a>
                 <div class="signup_link">
                     Don't want to be here? <a href="../../index.xhtml">Main-page</a>

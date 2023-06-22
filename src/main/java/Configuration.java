@@ -25,6 +25,9 @@ public class Configuration {
     }
 
     private void seedDatabase() {
+        if (!userDao.getAll().isEmpty())
+            return;
+
         var admin = new User();
         admin.setId(UUID.randomUUID());
         admin.setRole(Role.ADMIN);

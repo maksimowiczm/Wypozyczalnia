@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mindrot.jbcrypt.BCrypt;
 import pb.javab.beans.UserBean;
 import pb.javab.services.UserService;
 import pb.javab.models.User;
@@ -42,6 +41,8 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("register.xhtml?bad_password=true");
         } else if (result == AuthorizationResult.BAD_EMAIL) {
             resp.sendRedirect("register.xhtml?bad_email=true");
+        } else if (result == AuthorizationResult.SUCCESS) {
+            resp.sendRedirect("index.xhtml");
         } else {
             resp.sendRedirect("");
         }
@@ -61,13 +62,11 @@ public class RegisterServlet extends HttpServlet {
         if (!password.equals(password1)) {
             return AuthorizationResult.PASSWORD_DOESNT_MATCH;
         }
-        // haszowanie
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         // Rejestracja usera
         var user = new User();
         user.setEmail(email);
-        user.setPassword(hashedPassword);
+        user.setPassword(password);
 
         if (!userService.registerUser(user)) {
             return AuthorizationResult.ERROR;

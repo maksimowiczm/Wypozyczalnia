@@ -24,11 +24,12 @@
                 <div class="signup_link">
                     <div><b>ID of car: </b>${car.id}</div>
                     <div><b>Model of car: </b>${car.model}</div>
-                    <div><b>Manufacturer of car: </b>${car.manufacturer}</div><br></br>
+                    <div><b>Manufacturer of car: </b>${car.manufacturer}</div>
+                    <br></br>
                     <a href="#{'availableCarDetails.xhtml?id='.concat(car.id)}">
-                        <p:commandButton styleClass="btnM" value="details"/>
+                        <p:button styleClass="btnM" value="details"/>
                     </a>
-                    <a href="#{'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(car.id)}"><p:commandButton
+                    <a href="#{'/Wypozyczalnia-1/views/user/rentCarForm.xhtml?id='.concat(car.id)}"><p:button
                             styleClass="btnS" value="rent"/></a>
                 </div>
             </c:forEach>
