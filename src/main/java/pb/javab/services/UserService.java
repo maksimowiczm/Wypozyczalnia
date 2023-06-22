@@ -10,6 +10,8 @@ import pb.javab.models.Role;
 import pb.javab.models.User;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
+
 @Singleton
 public class UserService {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -52,6 +54,7 @@ public class UserService {
         // haszowanie
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
+        user.setCarRentals(new ArrayList<>());
         userDao.save(user);
         log.info("User was successfully registered with email - " + user.getEmail());
         return true;
