@@ -89,6 +89,7 @@ class CarRentalServiceTest {
         var calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, -1);
         rental.setCreatedAt(calendar.getTime());
+        rental.setCar(new Car());
 
         when(carRentalDao.getByStatus(CarRentalStatus.NOT_PAID)).thenReturn(List.of(rental));
         when(carRentalDao.getByStatus(CarRentalStatus.PAID)).thenReturn(List.of(new CarRental()));
@@ -98,6 +99,6 @@ class CarRentalServiceTest {
         carRentalService.cancelAllCarRentalsThatAreNotPaidAndOlderThan(new Date());
 
         // assert
-        verify(carRentalDao).delete(rental);
+        verify(carRentalDao).update(rental);
     }
 }
