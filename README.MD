@@ -58,3 +58,4 @@ Funkcjonalności
     - pay ✔ Mateusz
     - cancel ✔ Mateusz
     - cancelAllCarRentalsThatAreNotPaidAndOlderThan ✔ Mateusz
+      test maila essa

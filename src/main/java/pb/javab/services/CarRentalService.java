@@ -5,12 +5,12 @@ import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pb.javab.daos.ICarRentalDao;
 import pb.javab.models.CarRental;
 import pb.javab.models.CarRentalStatus;
 import pb.javab.models.CarStatus;
-import pb.javab.utils.EmailSender;
-import pb.javab.utils.IEmailSender;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,16 +18,10 @@ import java.util.stream.Collectors;
 @Singleton
 @Startup
 public class CarRentalService implements ICarRentalService {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private ICarRentalDao carRentalDao;
 
     private List<CarRental> carRentalToBePayed;
-
-    @Inject
-    private IEmailSender emailSender;
-
-    protected void setEmailSender(IEmailSender emailSender) {
-        this.emailSender = emailSender;
-    }
 
     @PostConstruct
     @Inject
@@ -39,9 +33,11 @@ public class CarRentalService implements ICarRentalService {
 
     @Override
     public boolean rent(CarRental carRental) {
+        carRental.setCreatedAt(new Date());
         carRentalDao.save(carRental);
         carRentalToBePayed.add(carRental);
-        emailSender.SendEmail(carRental.getUser(), EmailSender.reservationCreatedMessage);
+
+        log.info("Car with id " + carRental.getCar().getId() + " rented by user with id " + carRental.getUser().getId());
         return true;
     }
 
@@ -54,9 +50,8 @@ public class CarRentalService implements ICarRentalService {
         rental.setStatus(CarRentalStatus.PAID);
         carRentalDao.update(rental);
 
-        emailSender.SendEmail(rental.getUser(), EmailSender.reservationPayedMessage);
-
         carRentalToBePayed.remove(rental);
+        log.info("CarRental with id " + rental.getId() + " was paid.");
         return true;
     }
 
@@ -69,9 +64,8 @@ public class CarRentalService implements ICarRentalService {
         rental.setStatus(CarRentalStatus.CANCELED);
         carRentalDao.update(rental);
 
-        emailSender.SendEmail(rental.getUser(), EmailSender.reservationCancelledByUserMessage);
-
         carRentalToBePayed.remove(rental);
+        log.info("CarRental with id " + rental.getId() + " was canceled.");
         return true;
     }
 
@@ -89,9 +83,12 @@ public class CarRentalService implements ICarRentalService {
         var notPaid = carRentalToBePayed.stream().filter(c -> c.getStatus() == CarRentalStatus.NOT_PAID && c.getCreatedAt().before(date)).collect(Collectors.toList());
 
         for (var rental : notPaid) {
-            carRentalDao.delete(rental);
+            rental.getCar().setStatus(CarStatus.AVAILABLE);
+            rental.setStatus(CarRentalStatus.CANCELED);
+            carRentalDao.update(rental);
             carRentalToBePayed.remove(rental);
             deletedCarRentals.add(rental);
+            log.info("Reservation with id" + rental.getId() + " was not paid in time and is being canceled.");
         }
 
         return deletedCarRentals;
@@ -100,10 +97,9 @@ public class CarRentalService implements ICarRentalService {
     @Schedule(hour = "*", minute = "*/30", second = "*", persistent = false)
     private void cancelNotPayedReservations() {
         var calendar = Calendar.getInstance();
+        // TODO change to HOUR -3 and */30 in minutes
         calendar.add(Calendar.HOUR, -3);
-        List<CarRental> toBeEmailed = cancelAllCarRentalsThatAreNotPaidAndOlderThan(calendar.getTime());
-        for (CarRental rental : toBeEmailed) {
-            emailSender.SendEmail(rental.getUser(), EmailSender.reservationCancelledTimeoutMessage);
-        }
+        var toBeEmailed = cancelAllCarRentalsThatAreNotPaidAndOlderThan(calendar.getTime());
+        // TODO wysylanie maila
     }
 }
